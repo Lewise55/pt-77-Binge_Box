@@ -1,6 +1,8 @@
 import React, { useEffect } from "react"
 import rigoImageUrl from "../assets/img/rigo-baby.jpg";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
+import { Private } from "./Private.jsx";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
 
@@ -12,7 +14,7 @@ export const Home = () => {
 
 			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
 
-			const response = await fetch(backendUrl + "/api/hello")
+			const response = await fetch(backendUrl + "/hello")
 			const data = await response.json()
 
 			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
@@ -47,6 +49,7 @@ export const Home = () => {
 					</span>
 				)}
 			</div>
+			<Link to={"/profile"}>View Profile</Link>
 		</div>
 	);
 }; 
