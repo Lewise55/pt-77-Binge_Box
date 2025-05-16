@@ -72,232 +72,232 @@ def serve_any_other_file(path):
     response.cache_control.max_age = 0  # avoid cache memory
     return response
 
-@app.route('/user', methods=['GET'])
-def handle_get_user():
-    users = User.query.all()
+# @app.route('/user', methods=['GET'])
+# def handle_get_user():
+#     users = User.query.all()
 
-    return jsonify(users), 200
+#     return jsonify(users), 200
 
-@app.route('/user/favorites', methods=['GET'])
-def handle_user_favs():
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/user/favorites', methods=['GET'])
+# def handle_user_favs():
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    user = User.query.filter_by(user_name = user_name)
-    favorites = user['favorites']
-    watch_later = user['watch_later']
+#     user = User.query.filter_by(user_name = user_name)
+#     favorites = user['favorites']
+#     watch_later = user['watch_later']
 
-    return jsonify(favorites, watch_later), 200
+#     return jsonify(favorites, watch_later), 200
 
 
-# Reviews GET/POST/DELETE
-@app.route('/reviews', methods=['GET'])
-def handle_get_reviews():
-    reviews = Reviews.query.all().first()
+# # Reviews GET/POST/DELETE
+# @app.route('/reviews', methods=['GET'])
+# def handle_get_reviews():
+#     reviews = Reviews.query.all().first()
 
-    return jsonify(reviews), 200
+#     return jsonify(reviews), 200
 
-@app.route('/reviews/<int:reviews_id>', methods=['GET'])
-def handle_get_each_review(review_id):
-    review = Reviews.query.filter_by(id = review_id).first() 
+# @app.route('/reviews/<int:reviews_id>', methods=['GET'])
+# def handle_get_each_review(review_id):
+#     review = Reviews.query.filter_by(id = review_id).first() 
 
-    return jsonify(review), 200
+#     return jsonify(review), 200
 
-@app.route('/reviews/<int:reviews_id>', methods=['POST'])
-def handle_fav_review(review_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/reviews/<int:reviews_id>', methods=['POST'])
+# def handle_fav_review(review_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
     
-    review_fav = Favorites(user_name = user_name, review_id = review_id, comment_id = None, tag_id = None, show_id = None)
-    db.session.add(review_fav)
-    db.session.commit()
+#     review_fav = Favorites(user_name = user_name, review_id = review_id, comment_id = None, tag_id = None, show_id = None)
+#     db.session.add(review_fav)
+#     db.session.commit()
 
-    return jsonify('Review favorite has been created'), 200
+#     return jsonify('Review favorite has been created'), 200
 
-@app.route('/reviews/<int:reviews_id>', methods=['DELETE'])
-def handle_delete_fav_review(review_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/reviews/<int:reviews_id>', methods=['DELETE'])
+# def handle_delete_fav_review(review_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    fav = Favorites.query.filter_by(user_name = user_name, review_id = review_id).first()
+#     fav = Favorites.query.filter_by(user_name = user_name, review_id = review_id).first()
         
-    db.session.delete(fav)
-    db.session.commit()
+#     db.session.delete(fav)
+#     db.session.commit()
 
-    return jsonify('Review favorite has been removed'), 200
+#     return jsonify('Review favorite has been removed'), 200
 
 
-# Comments GET/POST/DELETE
-@app.route('/comments', methods=['GET'])
-def handle_get_comments():
-    comments = Comments.query.all().first()
+# # Comments GET/POST/DELETE
+# @app.route('/comments', methods=['GET'])
+# def handle_get_comments():
+#     comments = Comments.query.all().first()
 
-    return jsonify(comments), 200
+#     return jsonify(comments), 200
 
-@app.route('/comments/<int:comments_id>', methods=['GET'])
-def handle_get_each_comment(comment_id):
-    comment = Comments.query.filter_by(id = comment_id).first() 
+# @app.route('/comments/<int:comments_id>', methods=['GET'])
+# def handle_get_each_comment(comment_id):
+#     comment = Comments.query.filter_by(id = comment_id).first() 
 
-    return jsonify(comment), 200
+#     return jsonify(comment), 200
 
-@app.route('/comments/<int:comments_id>', methods=['POST'])
-def handle_fav_comment(comment_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/comments/<int:comments_id>', methods=['POST'])
+# def handle_fav_comment(comment_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
     
-    comment_fav = Favorites(user_name = user_name, comment_id = comment_id, review_id = None, tag_id = None, show_id = None)
-    db.session.add(comment_fav)
-    db.session.commit()
+#     comment_fav = Favorites(user_name = user_name, comment_id = comment_id, review_id = None, tag_id = None, show_id = None)
+#     db.session.add(comment_fav)
+#     db.session.commit()
 
-    return jsonify('Comment favorite has been created'), 200
+#     return jsonify('Comment favorite has been created'), 200
 
-@app.route('/comments/<int:comments_id>', methods=['DELETE'])
-def handle_delete_fav_comment(comment_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/comments/<int:comments_id>', methods=['DELETE'])
+# def handle_delete_fav_comment(comment_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    fav = Favorites.query.filter_by(user_name = user_name, comment_id = comment_id).first()
+#     fav = Favorites.query.filter_by(user_name = user_name, comment_id = comment_id).first()
         
-    db.session.delete(fav)
-    db.session.commit()
+#     db.session.delete(fav)
+#     db.session.commit()
 
-    return jsonify('Comment favorite has been removed'), 200
+#     return jsonify('Comment favorite has been removed'), 200
 
 
-# Tags GET/POST/DELETE
-@app.route('/tags', methods=['GET'])
-def handle_get_tags():
-    tags = Tags.query.all().first()
+# # Tags GET/POST/DELETE
+# @app.route('/tags', methods=['GET'])
+# def handle_get_tags():
+#     tags = Tags.query.all().first()
 
-    return jsonify(tags), 200
+#     return jsonify(tags), 200
 
-@app.route('/tags/<int:tags_id>', methods=['GET'])
-def handle_get_each_tag(tag_id):
-    tag = Tags.query.filter_by(id = tag_id).first() 
+# @app.route('/tags/<int:tags_id>', methods=['GET'])
+# def handle_get_each_tag(tag_id):
+#     tag = Tags.query.filter_by(id = tag_id).first() 
 
-    return jsonify(tag), 200
+#     return jsonify(tag), 200
 
-@app.route('/tags/<int:tags_id>', methods=['POST'])
-def handle_fav_tag(tag_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/tags/<int:tags_id>', methods=['POST'])
+# def handle_fav_tag(tag_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
     
-    tag_fav = Favorites(user_name = user_name, tag_id = tag_id, review_id = None, comment_id = None, show_id = None)
-    db.session.add(tag_fav)
-    db.session.commit()
+#     tag_fav = Favorites(user_name = user_name, tag_id = tag_id, review_id = None, comment_id = None, show_id = None)
+#     db.session.add(tag_fav)
+#     db.session.commit()
 
-    return jsonify('Tag favorite has been created'), 200
+#     return jsonify('Tag favorite has been created'), 200
 
-@app.route('/tags/<int:tags_id>', methods=['DELETE'])
-def handle_delete_fav_tag(tag_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/tags/<int:tags_id>', methods=['DELETE'])
+# def handle_delete_fav_tag(tag_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    fav = Favorites.query.filter_by(user_name = user_name, tag_id = tag_id).first()
+#     fav = Favorites.query.filter_by(user_name = user_name, tag_id = tag_id).first()
         
-    db.session.delete(fav)
-    db.session.commit()
+#     db.session.delete(fav)
+#     db.session.commit()
 
-    return jsonify('Tag favorite has been removed'), 200
+#     return jsonify('Tag favorite has been removed'), 200
 
 
-# Shows GET/POST/DELETE
-@app.route('/shows', methods=['GET'])
-def handle_get_shows():
-    shows = Shows.query.all().first()
+# # Shows GET/POST/DELETE
+# @app.route('/shows', methods=['GET'])
+# def handle_get_shows():
+#     shows = Shows.query.all().first()
 
-    return jsonify(shows), 200
+#     return jsonify(shows), 200
 
-@app.route('/shows/<int:shows_id>', methods=['GET'])
-def handle_get_each_show(show_id):
-    show = Shows.query.filter_by(id = show_id).first() 
+# @app.route('/shows/<int:shows_id>', methods=['GET'])
+# def handle_get_each_show(show_id):
+#     show = Shows.query.filter_by(id = show_id).first() 
 
-    return jsonify(show), 200
+#     return jsonify(show), 200
 
-@app.route('/shows/<int:shows_id>', methods=['POST'])
-def handle_fav_show(show_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/shows/<int:shows_id>', methods=['POST'])
+# def handle_fav_show(show_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
     
-    show_fav = Favorites(user_name = user_name, show_id = show_id, review_id = None, comment_id = None, tag_id = None)
-    db.session.add(show_fav)
-    db.session.commit()
+#     show_fav = Favorites(user_name = user_name, show_id = show_id, review_id = None, comment_id = None, tag_id = None)
+#     db.session.add(show_fav)
+#     db.session.commit()
 
-    return jsonify('Show favorite has been created'), 200
+#     return jsonify('Show favorite has been created'), 200
 
-@app.route('/shows/<int:shows_id>', methods=['DELETE'])
-def handle_delete_fav_show(show_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/shows/<int:shows_id>', methods=['DELETE'])
+# def handle_delete_fav_show(show_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    fav = Favorites.query.filter_by(user_name = user_name, show_id = show_id).first()
+#     fav = Favorites.query.filter_by(user_name = user_name, show_id = show_id).first()
         
-    db.session.delete(fav)
-    db.session.commit()
+#     db.session.delete(fav)
+#     db.session.commit()
 
-    return jsonify('Show favorite has been removed'), 200
+#     return jsonify('Show favorite has been removed'), 200
 
 
-# Watch_Later GET/POST/DELETE
-@app.route('/shows/<int:shows_id>', methods=['GET'])
-def handle_get_watch_later(watch_later_id):
-    watch_show_later = Shows.query.filter_by(id = watch_later_id).first() 
+# # Watch_Later GET/POST/DELETE
+# @app.route('/shows/<int:shows_id>', methods=['GET'])
+# def handle_get_watch_later(watch_later_id):
+#     watch_show_later = Shows.query.filter_by(id = watch_later_id).first() 
 
-    return jsonify(watch_show_later), 200
+#     return jsonify(watch_show_later), 200
 
-@app.route('/shows/<int:shows_id>', methods=['POST'])
-def handle_save_show(watch_later_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/shows/<int:shows_id>', methods=['POST'])
+# def handle_save_show(watch_later_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
     
-    watch_later = Watches(user_name = user_name, watch_later_id = watch_later_id, continue_watching_id = None)
-    db.session.add(watch_later)
-    db.session.commit()
+#     watch_later = Watches(user_name = user_name, watch_later_id = watch_later_id, continue_watching_id = None)
+#     db.session.add(watch_later)
+#     db.session.commit()
 
-    return jsonify('Watch later has been created'), 200
+#     return jsonify('Watch later has been created'), 200
 
-@app.route('/shows/<int:shows_id>', methods=['DELETE'])
-def handle_delete_saved_show(watch_later_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/shows/<int:shows_id>', methods=['DELETE'])
+# def handle_delete_saved_show(watch_later_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    watch_later = Watches.query.filter_by(user_name = user_name, watch_later_id = watch_later_id).first()
+#     watch_later = Watches.query.filter_by(user_name = user_name, watch_later_id = watch_later_id).first()
         
-    db.session.delete(watch_later)
-    db.session.commit()
+#     db.session.delete(watch_later)
+#     db.session.commit()
 
-    return jsonify('Watch Later has been removed'), 200
+#     return jsonify('Watch Later has been removed'), 200
 
 
-# Continue_Watching GET/POST/DELETE
-@app.route('/shows/<int:shows_id>', methods=['GET'])
-def handle_get_watched_show(continue_watching_id):
-    continue_watching = Shows.query.filter_by(id = continue_watching_id).first() 
+# # Continue_Watching GET/POST/DELETE
+# @app.route('/shows/<int:shows_id>', methods=['GET'])
+# def handle_get_watched_show(continue_watching_id):
+#     continue_watching = Shows.query.filter_by(id = continue_watching_id).first() 
 
-    return jsonify(continue_watching), 200
+#     return jsonify(continue_watching), 200
 
-@app.route('/shows/<int:shows_id>', methods=['POST'])
-def handle_continue_watching(continue_watching_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/shows/<int:shows_id>', methods=['POST'])
+# def handle_continue_watching(continue_watching_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
     
-    continue_watching = Watches(user_name = user_name, continue_watching_id = continue_watching_id, watch_later_id = None)
-    db.session.add(continue_watching)
-    db.session.commit()
+#     continue_watching = Watches(user_name = user_name, continue_watching_id = continue_watching_id, watch_later_id = None)
+#     db.session.add(continue_watching)
+#     db.session.commit()
 
-    return jsonify('Continue watching has been created'), 200
+#     return jsonify('Continue watching has been created'), 200
 
-@app.route('/shows/<int:shows_id>', methods=['DELETE'])
-def handle_delete_continue_watching(continue_watching_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# @app.route('/shows/<int:shows_id>', methods=['DELETE'])
+# def handle_delete_continue_watching(continue_watching_id):
+#     body = request.get_json()
+#     user_name = body['user_name']
 
-    continue_watching = Watches.query.filter_by(user_name = user_name, continue_watching_id = continue_watching_id).first()
+#     continue_watching = Watches.query.filter_by(user_name = user_name, continue_watching_id = continue_watching_id).first()
         
-    db.session.delete(continue_watching)
-    db.session.commit()
+#     db.session.delete(continue_watching)
+#     db.session.commit()
 
-    return jsonify('Continue watching has been removed'), 200
+#     return jsonify('Continue watching has been removed'), 200
 
 
 

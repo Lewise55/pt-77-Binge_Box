@@ -15,7 +15,7 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     favorites: Mapped[list["Favorites"]] = relationship(back_populates = "user_favorites")
-    watch_later: Mapped[list["Watches"]] = relationship(back_populates = "user_watches")
+    watches: Mapped[list["Watches"]] = relationship(back_populates = "user_watches")
 
 
     def serialize(self):
@@ -63,6 +63,7 @@ class Reviews(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     review: Mapped[str] = mapped_column(String(520), nullable=False)
+    favorites: Mapped["Favorites"] = relationship(back_populates = "fav_review")
 
     def serialize(self):
         return {
@@ -75,6 +76,7 @@ class Comments(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     comment: Mapped[str] = mapped_column(String(520), nullable=False)
+    favorites: Mapped["Favorites"] = relationship(back_populates = "fav_comment")
 
     def serialize(self):
         return {
@@ -89,7 +91,7 @@ class Tags(db.Model):
     review_tag: Mapped[str] = mapped_column(String(520), nullable=False)
     comment_tag: Mapped[str] = mapped_column(String(520), nullable=False)
     show_tag: Mapped[str] = mapped_column(String(520), nullable=False)
-
+    favorites: Mapped["Favorites"] = relationship(back_populates = "tag_user")
 
     def serialize(self):
         return {
@@ -107,6 +109,9 @@ class Shows(db.Model):
     episode: Mapped[str] = mapped_column(String(520), nullable=False)
     discription: Mapped[str] = mapped_column(String(520), nullable=False)
     rating: Mapped[str] = mapped_column(String(520), nullable=False)
+    favorites: Mapped["Favorites"] = relationship(back_populates = "fav_show")
+    watch_later: Mapped["Watches"] = relationship(back_populates = "watch_show_later")
+    continue_watching: Mapped["Watches"] = relationship(back_populates = "watch_show_again")
 
 
     def serialize(self):
@@ -123,13 +128,13 @@ class Watches(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
 
     user_name: Mapped[str] = mapped_column(ForeignKey("user.user_name"))
-    user_watches: Mapped["User"] = relationship(back_populates = "watch_later")
+    user_watches: Mapped["User"] = relationship(back_populates = "watches")    
 
     watch_later_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     watch_show_later: Mapped["Shows"] = relationship(back_populates = "watch_later")
 
-    continue_watching_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
-    watch_show_again: Mapped["Shows"] = relationship(back_populates = "watch_later")
+    # continue_watching_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
+    watch_show_again: Mapped["Shows"] = relationship(back_populates = "continue_watching")
 
     def serialize(self):
         return {
