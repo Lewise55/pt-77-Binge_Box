@@ -56,3 +56,18 @@ def handle_get_user():
     user_email = get_jwt_identity()
     user = User.query.filter_by(email = user_email).first()
     return jsonify(user.serialize()), 200
+
+# @api.route('/private', methods=['GET', 'POST'])
+# @jwt_required()
+# def handle_bio():
+#     body = request.get_json()
+#     user_bio = body['user_bio']
+#     user_image = body['user_image']
+
+#     if request.method == 'POST':
+#         new_bio = request.form.get('bio')
+#         user_bio = new_bio
+#         db.session.commit()
+#         return redirect(url_for('private'))
+
+#     return jsonify('Bio updated successfully'), 200
