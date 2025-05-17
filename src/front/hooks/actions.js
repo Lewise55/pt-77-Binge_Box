@@ -1,4 +1,5 @@
 export const signup = async (dispatch, payload) => {
+    console.log(payload)
     let response = await fetch(import.meta.env.VITE_BACKEND_URL + "/signup", {
         method: "POST",
         headers: {"content-type": "application/json"},
