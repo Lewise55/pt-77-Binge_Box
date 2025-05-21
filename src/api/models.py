@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, ForeignKey
+from sqlalchemy import String, Boolean, ForeignKey, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
@@ -11,7 +11,8 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
     user_bio: Mapped[str] = mapped_column(String(520), nullable=True)
-    user_image: Mapped[str] = mapped_column(String(520), nullable=True)
+    # trying Text instad of String
+    user_image: Mapped[str] = mapped_column(Text, nullable=True)
     password: Mapped[str] = mapped_column(nullable=False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     favorites: Mapped[list["Favorites"]] = relationship(back_populates = "user_favorites")

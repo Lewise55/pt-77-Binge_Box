@@ -49,3 +49,5 @@ export const getUser = async (dispatch, payload) => {
         payload: {user: data.user, access_token: payload}
     });
 };
+
+

@@ -40,6 +40,8 @@ export default function storeReducer(store, action = {}) {
       const { user, access_token } = action.payload
       
       sessionStorage.setItem('access_token', access_token);
+      console.log(access_token);
+      
 
       return {
         ...store,
