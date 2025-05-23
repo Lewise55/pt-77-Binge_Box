@@ -145,7 +145,7 @@ export const Private = () => {
                                                             onChange={(e) => setImage(e.target.files[0])}/>
                                                         <label 
                                                             className="input-group-text" 
-                                                            for="inputGroupFile02">
+                                                            htmlFor="inputGroupFile02">
                                                                 Upload Photo
                                                         </label>
                                                     </div>
@@ -175,7 +175,7 @@ export const Private = () => {
                                         <p>{store.user.email}</p>
                                     </div>
                                     : null}
-                                <label className="mb-3">Bio:</label>
+                                <label htmlFor="input" className="mb-3">Bio:</label>
                                 <div>                                
                                     <textarea 
                                         className="w-100"
