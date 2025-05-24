@@ -18,6 +18,7 @@ export const initialStore = () => {
     shows: [],
     showsAiringToday: [],
     showsTopRated: [],
+    showGenres: [],
     showSeasons: [],
     seasonImages: [],
     seasonVideos: [],
@@ -73,6 +74,12 @@ export default function storeReducer(store, action = {}) {
       return {
         ...store,
         showsTopRated: action.payload,
+      };
+
+    case "add_genre":
+      return {
+        ...store,
+        showGenres: action.payload,
       };
 
     case "add_season":

@@ -123,6 +123,29 @@ export const getTopRated = async(dispatch, payload) => {
     }    
 } 
 
+export const getGenre = async(dispatch, payload) => {
+    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+    let response = await fetch("https://api.themoviedb.org/3/genre/tv/list", {
+        method: 'GET',
+        headers: {
+            Authorization: "Bearer " + API_KEY,
+            "Content-Type": "application/json"
+        },
+    });
+    let data = await response.json();
+    if(!response.ok){
+        console.log('Network response was not ok');
+    }else{
+        // // console.log(data);
+        dispatch({
+            type: "add_genre",
+            payload: data.results
+        });
+        return data;            
+    }    
+} 
+
 export const getShowSeason = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
