@@ -1,55 +1,133 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
+import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { Private } from "./Private.jsx";
 import { Link } from "react-router-dom";
+import { ShowCard } from "../components/ShowCard.jsx";
 
 export const Home = () => {
+  const { store, dispatch, getShows, getAiringToday, getTopRated, getGenre } =
+    useGlobalReducer();
+  const [shows, setShows] = useState([]);
+  const [airingToday, setAiringToday] = useState([]);
+  const [topRated, setTopRated] = useState([]);
+  const [action, setAcion] = useState([]);
+  const [Romance, setRomance] = useState([]);
+  const [Comedy, setComedy] = useState([]);
+  const [horror, setHorror] = useState([]);
+  const [sci_fi, setSci_fi] = useState([]);
+  // const [] = useState([]);
+  
 
-	const { store, dispatch } = useGlobalReducer()
+  useEffect(() => {
+    getShows();
+    getAiringToday();
+    getTopRated();
+    getGenre();
+  }, []);
 
-	const loadMessage = async () => {
-		try {
-			const backendUrl = import.meta.env.VITE_BACKEND_URL
+  useEffect(() => {
+    setShows(store.shows);
+    setAiringToday(store.showsAiringToday);
+    setTopRated(store.showsTopRated);
+  }, [store.shows, store.showsAiringToday, store.showsTopRated]);
 
-			if (!backendUrl) throw new Error("VITE_BACKEND_URL is not defined in .env file")
+  useEffect(() => {
+    
+  }, [store.getGenres])
 
-			const response = await fetch(backendUrl + "/hello")
-			const data = await response.json()
+  // console.log(shows, airingToday, topRated, "HERE");
 
-			if (response.ok) dispatch({ type: "set_hello", payload: data.message })
+  return (
+    <div className="text-center mt-5">
+      <h2>Popular TV</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-5 mx-auto ">
+        {Array.isArray(shows) && shows.length > 0 ? (
+          shows
+            .slice(0, 15)
+            .map((show, index) => (
+              <ShowCard
+                key={index}
+                poster_path={show.poster_path}
+                first_air_date={show.first_air_date}
+                name={show.name}
+                overview={show.overview}
+              />
+            ))
+        ) : (
+          <p>No shows found.</p>
+        )}
+      </div>
 
-			return data
+      <h2>Airing Today</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-5 mx-auto ">
+        {Array.isArray(airingToday) && airingToday.length > 0 ? (
+          airingToday
+            .slice(0, 15)
+            .map((show, index) => (
+              <ShowCard
+                key={index}
+                poster_path={show.poster_path}
+                first_air_date={show.first_air_date}
+                name={show.name}
+                overview={show.overview}
+              />
+            ))
+        ) : (
+          <p>No shows found.</p>
+        )}
+      </div>
 
-		} catch (error) {
-			if (error.message) throw new Error(
-				`Could not fetch the message from the backend.
-				Please check if the backend is running and the backend port is public.`
-			);
-		}
+      <h2>Top Rated</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-5 mx-auto ">
+        {Array.isArray(topRated) && topRated.length > 0 ? (
+          topRated
+            .slice(0, 15)
+            .map((show, index) => (
+              <ShowCard
+                key={index}
+                poster_path={show.poster_path}
+                first_air_date={show.first_air_date}
+                name={show.name}
+                overview={show.overview}
+              />
+            ))
+        ) : (
+          <p>No shows found.</p>
+        )}
+      </div>
 
-	}
+      <h2>Action</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-5 mx-auto ">
+        {Array.isArray(shows) && shows.length > 0 ? (
+          shows
+            .slice(0, 15)
+            .map((show, index) => (
+              <ShowCard
+                key={index}
+                poster_path={show.poster_path}
+                first_air_date={show.first_air_date}
+                name={show.name}
+                overview={show.overview}
+              />
+            ))
+        ) : (
+          <p>No shows found.</p>
+        )}
+      </div>
 
-	useEffect(() => {
-		loadMessage()
-	}, [])
-
-	return (
-		<div className="text-center mt-5">
-			<h1 className="display-4">Hello Rigo!!</h1>
-			<p className="lead">
-				<img src={rigoImageUrl} className="img-fluid rounded-circle mb-3" alt="Rigo Baby" />
-			</p>
-			<div className="alert alert-info">
-				{store.message ? (
-					<span>{store.message}</span>
-				) : (
-					<span className="text-danger">
-						Loading message from the backend (make sure your python 🐍 backend is running)...
-					</span>
-				)}
-			</div>
-			<Link to={"/profile"}>View Profile</Link>
-		</div>
-	);
-}; 
+      <div className="alert alert-info">
+        {store.message ? (
+          <span>{store.message}</span>
+        ) : (
+          <span className="text-danger">
+            Loading message from the backend (make sure your python 🐍 backend
+            is running)...
+          </span>
+        )}
+      </div>
+      <Link to={"/profile"}>View Profile</Link>
+    </div>
+  );
+};

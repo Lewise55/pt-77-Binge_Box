@@ -57,20 +57,55 @@ def handle_get_user():
     user = User.query.filter_by(email = user_email).first()
     return jsonify(user.serialize()), 200
 
-# @api.route('/private', methods=['GET', 'POST'])
-# @jwt_required()
-# def handle_bio():
-#     body = request.get_json()
-#     user_bio = body['user_bio']
-#     user_image = body['user_image']
+# put/get Bio
+@api.route('/update_bio', methods=['PUT'])
+@jwt_required()
+def handle_put_bio():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    
+    data = request.get_json()
+    user.user_bio = data.get('user_bio', '')
+    db.session.commit()
 
-#     if request.method == 'POST':
-#         new_bio = request.form.get('bio')
-#         user_bio = new_bio
-#         db.session.commit()
-#         return redirect(url_for('private'))
+    return jsonify({'message': 'Bio updated'}), 200
 
-#     return jsonify('Bio updated successfully'), 200
+@api.route('/get_bio', methods=['GET'])
+@jwt_required()
+def handle_get_bio():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+  
+    if user and user.user_bio != None:        
+        return jsonify({'user_bio': user.user_bio}), 200
+
+    return jsonify({user.user_bio}), 200
+
+
+# put/get Image
+@api.route('/update_image', methods=['PUT'])
+@jwt_required()
+def handle_put_image():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    
+    data = request.get_json()
+    user.user_image = data.get("user_image")
+    db.session.commit()
+
+    return jsonify({'message': 'Image updated'}), 200
+
+@api.route('/get_image', methods=['GET'])
+@jwt_required()
+def handle_get_image():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+  
+    if user and user.user_image != None:        
+        return jsonify({'user_image': user.user_image}), 200
+
+    return jsonify({user.user_image}), 200
+    
 
 # get users
 @api.route('/user', methods=['GET'])
