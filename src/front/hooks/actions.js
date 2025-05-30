@@ -123,7 +123,7 @@ export const getTopRated = async(dispatch, payload) => {
     }    
 } 
 
-export const getGenre = async(dispatch, payload) => {
+export const getGenres = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
     let response = await fetch("https://api.themoviedb.org/3/genre/tv/list", {

@@ -13,7 +13,7 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-
+# getUser/ login info
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -107,7 +107,7 @@ def handle_get_image():
     return jsonify({user.user_image}), 200
     
 
-# get users
+# get account users
 @api.route('/user', methods=['GET'])
 def handle_get_users():
     users = User.query.all()
