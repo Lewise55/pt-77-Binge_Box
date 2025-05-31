@@ -1,0 +1,25 @@
+.showCard-title {
+  height: 40px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.card-img-wrapper {
+  width: 100%;             /* or a fixed px value if you prefer */
+  height: 500px;           /* set as needed */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;     /* optional: placeholder bg */
+}
+
+.card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;       /* This ensures uniform size and crops as needed */
+  display: block;
+}
