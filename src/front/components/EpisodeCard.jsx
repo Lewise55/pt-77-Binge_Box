@@ -12,8 +12,8 @@ export const EpisodeCard = (props) => {
   const [showGuestStars, setShowGuestStars] = useState(false);
   const [liked, setLiked] = useState(false);
 
-      
-  const shortenedOverview = 
+
+  const shortenedOverview =
     props.overview && props.overview.length > 50
       ? props.overview.slice(0, 50) + "..."
       : props.overview;
@@ -32,38 +32,35 @@ export const EpisodeCard = (props) => {
           <h5 className="showCard-title">{props.name}</h5>
           <div className="card-img-wrapper">
             <img
-              src={"https://image.tmdb.org/t/p/w500/" + props.poster}
+              src={props.poster}
               className="card-img"
             />
-          </div>          
-          <div 
-          className="card-body">
-            <p 
+          </div>
+          <div className="card-body">
+            <p
               onClick={() => setExpanded((exp) => !exp)}
               style={{
-                cuser: "pointer",
+                cursor: "pointer",
                 maxHeight: expanded ? "none" : "3em",
                 overflow: "hidden",
                 transition: "max-height 0.3s"
               }}
               className="card-text"
             >
-              {expanded && (
-                <button
-                style={{
-                  background: "#eee",
-                  border: "none",
-                  borderRadius: 4,
-                  cursor: "pointer"
-                }}
-                onClick={() => setExpanded(false)}
-              >
-                Collapse
-                </button>) ? props.overview : shortenedOverview}
-                {!expanded && props.overview.length > 50 && (
-                  <span style={{ color: "blue" }}> (More)</span>
-                )}
-              </p>  
+              {expanded ? (
+                <>
+                  {props.overview}
+                  <span style={{ color: "blue" }}> (less)</span>
+                </>
+              ) : (
+                <>
+                  {shortenedOverview}
+                  {props.overview.length > 50 && (
+                    <span style={{ color: "blue" }}> (More)</span>
+                  )}
+                </>
+              )}
+            </p>
           </div>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">Air Date: {props.air_date}</li>
@@ -71,27 +68,27 @@ export const EpisodeCard = (props) => {
             <li className="list-group-item">Runtime: {props.runtime}</li>
             <span
               onClick={() => setShowGuestStars(show => !show)}
-              style={{color: 'blue', cursor: 'pointer', textDecoration: 'underline'}}
-            >             
+              style={{ color: 'blue', cursor: 'pointer', textDecoration: 'underline' }}
+            >
               {showGuestStars ? 'Hide Guest Stars' : 'Show Guest Stars'}
             </span>
             {showGuestStars && (
               <li>
                 {props.guest_stars && props.guest_stars.map(star => (
-                  <li                 
+                  <li
                     className="Cast"
                     key={star.id}>{star.name} (as {star.character})
-                  </li>              
-                ))}   
+                  </li>
+                ))}
               </li>
-              )}
+            )}
           </ul>
           <div className="card-body d-flex justify-content-around">
             <button className="btn btn-light">Watch Now</button>
             <button className="btn btn-light">Review</button>
           </div>
         </div>
-      </div>      
+      </div>
     </div>
   );
 };

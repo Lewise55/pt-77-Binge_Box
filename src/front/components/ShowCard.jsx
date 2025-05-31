@@ -9,7 +9,7 @@ export const ShowCard = (props) => {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
 
-  const shortenedOverview = 
+  const shortenedOverview =
     props.overview && props.overview.length > 50
       ? props.overview.slice(0, 50) + "..."
       : props.overview;
@@ -22,7 +22,7 @@ export const ShowCard = (props) => {
   };
 
   const onShowClick = () => {
-    props.id === series_id;
+
   }
 
   return (
@@ -36,54 +36,52 @@ export const ShowCard = (props) => {
               className="card-img"
               alt={props.first_air_date}
             />
-          </div>          
-          <div className="card-body">    
-            <p 
+          </div>
+          <div className="card-body">
+            <p
               onClick={() => setExpanded((exp) => !exp)}
               style={{
-                cuser: "pointer",
+                cursor: "pointer",
                 maxHeight: expanded ? "none" : "3em",
                 overflow: "hidden",
                 transition: "max-height 0.3s"
               }}
               className="card-text"
             >
-              {expanded && (
-                <button
-                style={{
-                  background: "#eee",
-                  border: "none",
-                  borderRadius: 4,
-                  cursor: "pointer"
-                }}
-                onClick={() => setExpanded(false)}
-              >
-                Collapse
-              </button>) ? props.overview : shortenedOverview}
-              {!expanded && props.overview.length > 50 && (
-                <span style={{ color: "blue" }}> (More)</span>
+              {expanded ? (
+                <>
+                  {props.overview}
+                  <span style={{ color: "blue" }}> (less)</span>
+                </>
+              ) : (
+                <>
+                  {shortenedOverview}
+                  {props.overview.length > 50 && (
+                    <span style={{ color: "blue" }}> (More)</span>
+                  )}
+                </>
               )}
-              </p>              
-            </div>            
-            <ul className="list-group list-group-flush">
-              <li className="list-group-item">An item</li>
-              <li className="list-group-item">A second item</li>
-              <li className="list-group-item">A third item</li>
-            </ul>
+            </p>
+          </div>
+          <ul className="list-group list-group-flush">
+            <li className="list-group-item">An item</li>
+            <li className="list-group-item">A second item</li>
+            <li className="list-group-item">A third item</li>
+          </ul>
           <div className="card-body d-flex">
             <Link className="mx-2" to={`/showDetails/1/${props.id}`}>
-						<button 
-              className="btn btn-light"
-              onClick={() => onShowClick(props.id, 1)}>
+              <button
+                className="btn btn-light"
+                onClick={() => onShowClick(props.id, 1)}>
                 Show Details
-            </button>
+              </button>
             </Link>
             <Link to="/episodeCard">
               <button className="btn btn-light">Watch Episodes</button>
             </Link>
           </div>
         </div>
-      </div>      
+      </div>
     </div>
   );
 };
