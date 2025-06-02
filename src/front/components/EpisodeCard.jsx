@@ -30,7 +30,7 @@ export const EpisodeCard = (props) => {
       <div className="showCard">
         <div className="card h-100 bg-dark text-light mx-2" style={{ minWidth: "18rem" }}>
           <h5 className="showCard-title">{props.name}</h5>
-          <div className="card-img-wrapper">
+          <div className="EpisodeCard-img-wrapper">
             <img
               src={props.poster}
               className="card-img"

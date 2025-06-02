@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
-export const EpisodeImage = () => {
+export const Component = () => {
 
     const { store, dispatch } = useGlobalReducer()        
 

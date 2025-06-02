@@ -13,6 +13,7 @@ import { Signup } from "./pages/Signup";
 import { Login } from "./pages/Login";
 import { Private } from "./pages/Private";
 import {ShowDetails} from "./pages/ShowDetails";
+import { WatchEpisode } from "./pages/WatchEpisode";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -33,6 +34,7 @@ export const router = createBrowserRouter(
         <Route path="/login" element={<Login />} />
         <Route path="/profile" element={<Private />} />
         <Route path="/showDetails/:season_number/:series_id" element={<ShowDetails />} />
+        <Route path="/watchEpisode/series/:series_id/season/:season_number/episode/:episode_number" element={<WatchEpisode />} />
       </Route>
     )
 );
