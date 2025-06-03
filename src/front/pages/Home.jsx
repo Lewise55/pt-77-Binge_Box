@@ -6,16 +6,19 @@ import { Private } from "./Private.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { ShowCard } from "../components/ShowCard.jsx";
+import { Carousel } from "../components/Carousel.jsx";
+import { faMoneyBillWave } from "@fortawesome/free-solid-svg-icons";
 
 export const Home = () => {
-  const { store, dispatch, getShows, getAiringToday, getTopRated, getGenres } = useGlobalReducer();
+  const { store, dispatch, getShows, getAiringToday, getTopRated, getGenres } =
+    useGlobalReducer();
   const navigate = useNavigate();
-  const[selectedShow, setSelectedShow] = ([]);
+  const [selectedShow, setSelectedShow] = [];
   const [shows, setShows] = useState([]);
   const [airingToday, setAiringToday] = useState([]);
   const [topRated, setTopRated] = useState([]);
-  const[genres, setGenres] = useState([]);
-  const [action, setAction] = useState([]);  
+  const [genres, setGenres] = useState([]);
+  const [action, setAction] = useState([]);
   const [animmation, setAnimation] = useState([]);
   const [drama, setDrama] = useState([]);
   const [Comedy, setComedy] = useState([]);
@@ -23,43 +26,43 @@ export const Home = () => {
   const [family, setFamily] = useState([]);
   const [sciFi, setSciFi] = useState([]);
   const [soap, setSoap] = useState([]);
-  const[other, setOther] = useState([]);       
+  const [other, setOther] = useState([]);
 
   useEffect(() => {
     getShows();
     getAiringToday();
     getTopRated();
-    getGenres().then(data => {
+    getGenres().then((data) => {
       setGenres(data.genres);
-    })   
-
+    });
   }, []);
 
   useEffect(() => {
-    let actionGenre = genres.find(g => g.id === 10759); 
+    let actionGenre = genres.find((g) => g.id === 10759);
     let actionGenreId = actionGenre ? actionGenre.id : null;
 
-    Array.isArray(shows) && shows.length > 0 ?
-      setAction(shows.filter(show =>
-        Array.isArray(show.genre_ids) &&
-        show.genre_ids.includes(actionGenreId)
-      )): []; 
-
-    }, [shows, genres])   
-  
+    Array.isArray(shows) && shows.length > 0
+      ? setAction(
+          shows.filter(
+            (show) =>
+              Array.isArray(show.genre_ids) &&
+              show.genre_ids.includes(actionGenreId)
+          )
+        )
+      : [];
+  }, [shows, genres]);
 
   useEffect(() => {
     setShows(store.shows);
     setAiringToday(store.showsAiringToday);
-    setTopRated(store.showsTopRated);      
-    
-   }, [store.shows, store.showsAiringToday, store.showsTopRated]);  
-  
+    setTopRated(store.showsTopRated);
+  }, [store.shows, store.showsAiringToday, store.showsTopRated]);
+
   // console.log(shows, airingToday, topRated, "HERE");
-  console.log(selectedShow);
 
   return (
     <div className="text-center mt-5">
+      <Carousel />
       <h2 className="py-2">Popular TV</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
         {Array.isArray(shows) && shows.length > 0 ? (
@@ -73,7 +76,7 @@ export const Home = () => {
                 first_air_date={show.first_air_date}
                 name={show.name}
                 overview={show.overview}
-                onClick={() => setSelectedShow({id})}
+                onClick={() => setSelectedShow({ id })}
               />
             ))
         ) : (
@@ -94,7 +97,7 @@ export const Home = () => {
                 first_air_date={show.first_air_date}
                 name={show.name}
                 overview={show.overview}
-                onClick={() => setSelectedShow({id})}
+                onClick={() => setSelectedShow({ id })}
               />
             ))
         ) : (
@@ -115,7 +118,7 @@ export const Home = () => {
                 first_air_date={show.first_air_date}
                 name={show.name}
                 overview={show.overview}
-                onClick={() => setSelectedShow({id})}
+                onClick={() => setSelectedShow({ id })}
               />
             ))
         ) : (
@@ -136,7 +139,7 @@ export const Home = () => {
                 first_air_date={show.first_air_date}
                 name={show.name}
                 overview={show.overview}
-                onClick={() => setSelectedShow({id})}
+                onClick={() => setSelectedShow({ id })}
               />
             ))
         ) : (

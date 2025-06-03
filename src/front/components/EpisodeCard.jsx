@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { EpisodeImage } from "../pages/Component.jsx";
 
 export const EpisodeCard = (props) => {
   const { store, dispatch } = useGlobalReducer();

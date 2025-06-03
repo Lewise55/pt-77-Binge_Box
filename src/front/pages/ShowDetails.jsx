@@ -7,7 +7,7 @@ import { EpisodeCard } from '../components/EpisodeCard.jsx';
 export const ShowDetails = () => {
     const { store, dispatch } = useGlobalReducer();
     const [allSeasonsData, setAllSeasonsData] = useState([]);
-    const [episodes, setEpisodes] = useState([]);
+    const [episode, setEpisode] = useState([]);
     const [seasonImages, setSeasonImages] = useState([]);
     const [seasonVideos, setSeasonVideos] = useState([]);
 
@@ -90,6 +90,7 @@ export const ShowDetails = () => {
                                                 ? "https://image.tmdb.org/t/p/w500" + season.poster_path
                                                 : "https://static.vecteezy.com/system/resources/thumbnails/000/429/651/small/1312.i011.022.S.i011.c10.COMING_SOON.jpg"
                                         }
+                                        onClick={() => setEpisode({})}
                                     />
                                 ))
                             ) : (

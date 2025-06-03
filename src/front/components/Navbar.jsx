@@ -5,7 +5,7 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
-				<Link to="/">
+				<Link to="/"></Link>
 					<div className="dropdown">
 						<button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<i className="fa-solid fa-bars"></i>
@@ -25,8 +25,7 @@ export const Navbar = () => {
 							<li><a className="dropdown-item" href="#">Settings <i className="fa-solid fa-gear"></i></a></li>
 						</ul>
 						<ul></ul>
-					</div>
-				</Link>
+					</div>				
 				<h2>BINGE BOX</h2>
 				<div className="ml-auto">
 					<Link className="mx-2" to="/signup">

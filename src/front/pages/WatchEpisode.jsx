@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useParams } from "react-router-dom";
 
-export const WatchEpisode = (series_id, season_number, episode_number) => {
+export const WatchEpisode = () => {
 
     const { store, dispatch } = useGlobalReducer()
     const {series_id, season_number, episode_number} = useParams();      

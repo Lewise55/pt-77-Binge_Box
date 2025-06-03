@@ -1,3 +1,12 @@
+ body {
+  background: linear-gradient(109.6deg, rgb(0, 37, 84) 11.2%, rgba(0, 37, 84, 0.32) 100.2%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 0;
+  padding: 0;
+}
+
 .showCard-title {
   height: 40px;
   overflow: hidden;
