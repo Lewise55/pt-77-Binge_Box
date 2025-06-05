@@ -21,14 +21,15 @@ export const ShowCard = (props) => {
     // }
   };
 
-  const onShowClick = () => {
-
-  }
+  const onShowClick = () => {};
 
   return (
     <div className="text-center mt-5">
       <div className={`showCard ${expanded ? "expanded" : ""}`}>
-        <div className="card h-100 bg-dark text-light mx-2" style={{ minWidth: "18rem" }}>
+        <div
+          className="card h-100 bg-dark text-light mx-2"
+          style={{ minWidth: "18rem" }}
+        >
           <h5 className="showCard-title">{props.name}</h5>
           <div className="card-img-wrapper">
             <img
@@ -44,7 +45,7 @@ export const ShowCard = (props) => {
                 cursor: "pointer",
                 maxHeight: expanded ? "none" : "3em",
                 overflow: "hidden",
-                transition: "max-height 0.3s"
+                transition: "max-height 0.3s",
               }}
               className="card-text"
             >
@@ -72,12 +73,13 @@ export const ShowCard = (props) => {
             <Link className="mx-2" to={`/showDetails/1/${props.id}`}>
               <button
                 className="btn btn-light"
-                onClick={() => onShowClick(props.id, 1)}>
+                onClick={() => onShowClick(props.id, 1)}
+              >
                 Show Details
               </button>
             </Link>
-            <Link to="/episodeCard">
-              <button className="btn btn-light">Watch Episodes</button>
+            <Link to={`/watchTrailer/${props.id}`}>
+              <button className="btn btn-light">Watch Tailer</button>
             </Link>
           </div>
         </div>

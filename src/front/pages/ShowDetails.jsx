@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { useParams } from "react-router-dom";
 import { EpisodeCard } from '../components/EpisodeCard.jsx';
+import { Link } from "react-router-dom";
 
 
 export const ShowDetails = () => {
@@ -90,7 +91,6 @@ export const ShowDetails = () => {
                                                 ? "https://image.tmdb.org/t/p/w500" + season.poster_path
                                                 : "https://static.vecteezy.com/system/resources/thumbnails/000/429/651/small/1312.i011.022.S.i011.c10.COMING_SOON.jpg"
                                         }
-                                        onClick={() => setEpisode({})}
                                     />
                                 ))
                             ) : (

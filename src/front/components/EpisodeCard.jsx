@@ -83,8 +83,13 @@ export const EpisodeCard = (props) => {
             )}
           </ul>
           <div className="card-body d-flex justify-content-around">
-            <button className="btn btn-light">Watch Now</button>
-            <button className="btn btn-light">Review</button>
+            <Link to="/watchEpisode">
+              <button className="btn btn-light">Watch Now</button>
+            </Link>
+            <Link to="/reviews">
+              <button className="btn btn-light">Review</button>
+            </Link>
+            
           </div>
         </div>
       </div>
