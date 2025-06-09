@@ -6,19 +6,39 @@ import { Private } from "./Private.jsx";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 import { ShowCard } from "../components/ShowCard.jsx";
+import { MovieCard } from "../components/MovieCard.jsx";
 import { Carousel } from "../components/Carousel.jsx";
 import { faMoneyBillWave } from "@fortawesome/free-solid-svg-icons";
 
 export const Home = () => {
-  const { store, dispatch, getShows, getAiringToday, getTopRated, getGenres } =
+  const { 
+    store, 
+    dispatch, 
+    getShows, 
+    getAiringToday, 
+    getTopRated,
+    getTrending, 
+    getGenres,
+    getPopularMovies,
+    getTopRatedMovies,
+    getMoviesPlayingNow,
+    getUpcomingMovies,
+    getTrendingMovies,
+   } =
     useGlobalReducer();
   const navigate = useNavigate();
   const [selectedShow, setSelectedShow] = [];
+  const [selectedMovie, setSelectedMovie] = [];
   const [shows, setShows] = useState([]);
   const [airingToday, setAiringToday] = useState([]);
   const [topRated, setTopRated] = useState([]);
+  const [trending, setTrending] = useState([]);
   const [genres, setGenres] = useState([]);
   const [action, setAction] = useState([]);
+  const [moviesPlayingNow, setMoviesPlayingNow] = useState([])
+  const [popularMovies, setPopularMovies] = useState([]);
+  const [topRatedMovies, setTopRatedMovies] = useState([]);
+  const [trendingMovies, setTrendingMovies] = useState([]);
   const [animmation, setAnimation] = useState([]);
   const [drama, setDrama] = useState([]);
   const [Comedy, setComedy] = useState([]);
@@ -32,6 +52,12 @@ export const Home = () => {
     getShows();
     getAiringToday();
     getTopRated();
+    getTrending();
+    getPopularMovies();
+    getTopRatedMovies();
+    getMoviesPlayingNow();
+    getUpcomingMovies();
+    getTrendingMovies();
     getGenres().then((data) => {
       setGenres(data.genres);
     });
@@ -56,15 +82,133 @@ export const Home = () => {
     setShows(store.shows);
     setAiringToday(store.showsAiringToday);
     setTopRated(store.showsTopRated);
-  }, [store.shows, store.showsAiringToday, store.showsTopRated]);
+    setTrending(store.showsTrending);
+    setPopularMovies(store.popularMovies);    
+    setMoviesPlayingNow(store.moviesPlayingNow);
+    setTopRatedMovies(store.topRatedMovies);
+    setTrendingMovies(store.trendingMovies)
+  }, [
+    store.shows, 
+    store.showsAiringToday, 
+    store.showsTopRated,
+    store.showsTrending,
+    store.popularMovies,    
+    store.moviesPlayingNow,
+    store.topRatedMovies,
+    store.trendingMovies
+  ]);
 
   // console.log(shows, airingToday, topRated, "HERE");
-
-  
 
   return (
     <div className="text-center mt-5">
       <Carousel />
+      <h2 className="py-2">Trending Films</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
+        {Array.isArray(trendingMovies) && trendingMovies.length > 0 ? (
+          trendingMovies
+            .slice(0, 15)
+            .map((movie, index) => (
+              <MovieCard
+                key={index}
+                id={movie.id}
+                poster_path={movie.poster_path}
+                first_air_date={movie.first_air_date}
+                name={movie.name}
+                overview={movie.overview}
+                onClick={() => setSelectedMovie({ id })}
+              />
+            ))
+        ) : (
+          <p>No movies found.</p>
+        )}
+      </div>
+
+      <h2 className="py-2">Top Rated Films</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
+        {Array.isArray(topRatedMovies) && topRatedMovies.length > 0 ? (
+          topRatedMovies
+            .slice(0, 15)
+            .map((movie, index) => (
+              <MovieCard
+                key={index}
+                id={movie.id}
+                poster_path={movie.poster_path}
+                first_air_date={movie.first_air_date}
+                name={movie.name}
+                overview={movie.overview}
+                onClick={() => setSelectedMovie({ id })}
+              />
+            ))
+        ) : (
+          <p>No movies found.</p>
+        )}
+      </div>      
+
+      <h2 className="py-2">Popular Films</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
+        {Array.isArray(popularMovies) && popularMovies.length > 0 ? (
+          popularMovies
+            .slice(0, 15)
+            .map((movie, index) => (
+              <MovieCard
+                key={index}
+                id={movie.id}
+                poster_path={movie.poster_path}
+                first_air_date={movie.first_air_date}
+                name={movie.name}
+                overview={movie.overview}
+                onClick={() => setSelectedMovie({ id })}
+              />
+            ))
+        ) : (
+          <p>No movies found.</p>
+        )}
+      </div>
+
+      <h2 className="py-2">Films Playing Now</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
+        {Array.isArray(moviesPlayingNow) && moviesPlayingNow.length > 0 ? (
+          moviesPlayingNow
+            .slice(0, 15)
+            .map((movie, index) => (
+              <MovieCard
+                key={index}
+                id={movie.id}
+                poster_path={movie.poster_path}
+                first_air_date={movie.first_air_date}
+                name={movie.name}
+                overview={movie.overview}
+                onClick={() => setSelectedMovie({ id })}
+              />
+            ))
+        ) : (
+          <p>No movies found.</p>
+        )}
+      </div>
+      
+      <h2 className="py-2">Trending TV</h2>
+      <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
+        {Array.isArray(trending) && trending.length > 0 ? (
+          trending
+            .slice(0, 15)
+            .map((show, index) => (
+              <ShowCard
+                key={index}
+                id={show.id}
+                poster_path={show.poster_path}
+                first_air_date={show.first_air_date}
+                name={show.name}
+                overview={show.overview}
+                onClick={() => setSelectedShow({ id })}
+              />
+            ))
+        ) : (
+          <p>No shows found.</p>
+        )}
+      </div>
+
+
       <h2 className="py-2">Popular TV</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
         {Array.isArray(shows) && shows.length > 0 ? (

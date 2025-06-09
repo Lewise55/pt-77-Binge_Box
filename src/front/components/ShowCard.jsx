@@ -75,7 +75,7 @@ export const ShowCard = (props) => {
                 className="btn btn-light"
                 onClick={() => onShowClick(props.id, 1)}
               >
-                Show Details
+                View Details
               </button>
             </Link>
             <Link to={`/watchTrailer/${props.id}`}>

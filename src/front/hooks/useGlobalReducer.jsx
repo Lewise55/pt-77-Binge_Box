@@ -7,12 +7,14 @@ import {
     getUser as handle_getUser, 
     getShows, 
     getAiringToday, 
-    getTopRated, 
+    getTopRated,
+    getTrending, 
     getGenres,
     getPopularMovies,
     getTopRatedMovies,
     getMoviesPlayingNow,
-    getUpcomingMovies
+    getUpcomingMovies,
+    getTrendingMovies,
 } from "./actions"
 
 // Create a context to hold the global state of the application
@@ -32,11 +34,13 @@ export function StoreProvider({ children }) {
         getShows: (payload) => getShows(dispatch, payload),
         getAiringToday: (payload) => getAiringToday(dispatch, payload),
         getTopRated: (payload) => getTopRated(dispatch, payload),
+        getTrending: (payload) => getTrending(dispatch, payload),
         getGenres: (payload) => getGenres(dispatch, payload),
         getPopularMovies: (payload) => getPopularMovies(dispatch, payload),
         getTopRatedMovies: (payload) => getTopRatedMovies(dispatch, payload),
         getMoviesPlayingNow: (payload) => getMoviesPlayingNow(dispatch, payload),
         getUpcomingMovies: (payload) => getUpcomingMovies(dispatch, payload),
+        getTrendingMovies: (payload) => getTrendingMovies(dispatch, payload),
     }
     return <StoreContext.Provider value={{ store, dispatch, ...actions}}>
         {children}
@@ -54,11 +58,13 @@ export default function useGlobalReducer() {
         getShows, 
         getAiringToday, 
         getTopRated,
+        getTrending,
         getGenres,
         getPopularMovies,
         getTopRatedMovies,
         getMoviesPlayingNow,
-        getUpcomingMovies 
+        getUpcomingMovies,
+        getTrendingMovies, 
     } = useContext(StoreContext)
     return { 
         dispatch, 
@@ -69,10 +75,12 @@ export default function useGlobalReducer() {
         getShows, 
         getAiringToday, 
         getTopRated,
+        getTrending,
         getGenres,
         getPopularMovies,
         getTopRatedMovies,
         getMoviesPlayingNow,
-        getUpcomingMovies
+        getUpcomingMovies,
+        getTrendingMovies,
     };
 }

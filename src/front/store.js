@@ -18,11 +18,13 @@ export const initialStore = () => {
     shows: [],
     showsAiringToday: [],
     showsTopRated: [],
+    showsTrending: [],
     showGenres: [],
     popularMovies: [],
     moviesPlayingNow: [],
     topRatedMovies: [],
-    upcomingMovies: []
+    upcomingMovies: [],
+    trendingMovies: []
   };
 };
 
@@ -74,6 +76,12 @@ export default function storeReducer(store, action = {}) {
         showsTopRated: action.payload,
       };
 
+    case "add_trending":
+      return {
+        ...store,
+        showsTrending: action.payload,
+      };
+
     case "add_genre":
       return {
         ...store,
@@ -98,10 +106,16 @@ export default function storeReducer(store, action = {}) {
         topRatedMovies: action.payload,
       };
 
-      case "add_upcoming_movie":
+    case "add_upcoming_movie":
       return {
         ...store,
         upcomingMovies: action.payload,
+      };
+
+    case "add_trending_movie":
+      return {
+        ...store,
+        trendingMovies: action.payload,
       };
 
     default:

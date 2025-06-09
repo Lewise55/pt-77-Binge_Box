@@ -123,6 +123,29 @@ export const getTopRated = async(dispatch, payload) => {
     }    
 } 
 
+export const getTrending = async(dispatch, payload) => {
+    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+    let response = await fetch("https://api.themoviedb.org/3/trending/tv/week", {
+        method: 'GET',
+        headers: {
+            Authorization: "Bearer " + API_KEY,
+            "Content-Type": "application/json"
+        },
+    });
+    let data = await response.json();
+    if(!response.ok){
+        console.log('Network response was not ok');
+    }else{
+        // // console.log(data);
+        dispatch({
+            type: "add_trending",
+            payload: data.results
+        });
+        return data;            
+    }    
+} 
+
 export const getGenres = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -147,6 +170,7 @@ export const getGenres = async(dispatch, payload) => {
 } 
 
 // movie APIs
+
 export const getPopularMovies = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -233,6 +257,29 @@ export const getUpcomingMovies = async(dispatch, payload) => {
         // // console.log(data);
         dispatch({
             type: "add_upcoming_movie",
+            payload: data.results
+        });
+        return data;            
+    }    
+}
+
+export const getTrendingMovies = async(dispatch, payload) => {
+    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+    let response = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
+        method: 'GET',
+        headers: {
+            Authorization: "Bearer " + API_KEY,
+            "Content-Type": "application/json"
+        },
+    });
+    let data = await response.json();
+    if(!response.ok){
+        console.log('Network response was not ok');
+    }else{
+        // // console.log(data);
+        dispatch({
+            type: "add_trending_movie",
             payload: data.results
         });
         return data;            
