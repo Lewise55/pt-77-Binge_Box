@@ -8,11 +8,11 @@ export const Carousel = () => {
   const [movies, setMovies]  = useState([]);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchUpcomingMovies = async () => {
       const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-      // https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc' \
+      //https://api.themoviedb.org/3/movie/popular?language=en-US&page=1
       let response = await fetch(
-        "https://api.themoviedb.org/3/movie/popular?language=en-US&page=1",
+        "https://api.themoviedb.org/3/movie/upcoming?append_to_response=videos,images",
         {
           method: "GET",
           headers: {
@@ -28,7 +28,7 @@ export const Carousel = () => {
       }
       setMovies(data.results);    
     };
-    fetchMovies();
+    fetchUpcomingMovies();
   }, [])
 
   console.log(movies)
@@ -45,7 +45,7 @@ export const Carousel = () => {
               className={`carousel-item ${index === 0 ? "active" : ""}`}
               style={{
                 height: "90vh",
-                backgroundImage: `url("https://image.tmdb.org/t/p/w500/" + ${movies.poster_path})`,
+                backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movie.backdrop_path}")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 position: "relative",

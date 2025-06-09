@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, ForeignKey, Text
+from datetime import datetime
+from sqlalchemy import String, Boolean, ForeignKey, Text, DateTime, func, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
@@ -62,16 +63,27 @@ class Favorites(db.Model):
 
 class Reviews(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    review: Mapped[str] = mapped_column(String(520), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    user_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    item_type: Mapped[str] = mapped_column(String(520), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    rating: Mapped[int] = mapped_column(Integer, nullable=False)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
     favorites: Mapped["Favorites"] = relationship(back_populates = "fav_review")
 
     def serialize(self):
         return {
             "id": self.id,
+            "user_id": self.user_id,
             "user_name": self.user_name,
-            "review": self.review,
+            "item_type": self.item_type,
+            "text": self.text,
+            "rating": self.rating,
+            "timestamp": self.timestamp,
+            "favorites": self.favorites,
+
         }
+
     
 class Comments(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)

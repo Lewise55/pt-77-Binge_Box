@@ -60,6 +60,8 @@ export const Home = () => {
 
   // console.log(shows, airingToday, topRated, "HERE");
 
+  
+
   return (
     <div className="text-center mt-5">
       <Carousel />
