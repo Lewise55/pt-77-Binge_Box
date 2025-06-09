@@ -2,17 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
-export const WatchTrailer = () => {
+export const MovieTailer = () => {
   const { store, dispatch } = useGlobalReducer();
   const [trailers, setTrailers] = useState([]);
 
-  const { series_id, season_numbers } = useParams();
+  const { id } = useParams();
 
   useEffect(() => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-    const getTrailer = async () => {
+    const getMovieTrailer = async () => {
       const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${series_id}/season/1?append_to_response=videos,images`,
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}&append_to_response=videos,images`,
         {
           method: "GET",
           headers: {
@@ -28,8 +28,8 @@ export const WatchTrailer = () => {
       console.log(actualTrailers);
       setTrailers(actualTrailers);
     };
-    getTrailer();
-  }, []);
+    getMovieTrailer();
+  }, [id]);
 
   console.log(trailers);
   const videoUrl =
@@ -39,17 +39,20 @@ export const WatchTrailer = () => {
 
   return (
     <div className="text-center mt-5">
-      <iframe
-        width="560"
-        height="315"
-        src={videoUrl}
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      ></iframe>
-    </div>
-    
+      {videoUrl ? (
+        <iframe
+          width="560"
+          height="315"
+          src={videoUrl}
+          title="YouTube video player"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerPolicy="strict-origin-when-cross-origin"
+          allowFullScreen
+        ></iframe>
+      ):(
+        <p>Trailer coming soon...</p>
+      )}      
+    </div>    
   );
 };

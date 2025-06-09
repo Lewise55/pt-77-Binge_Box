@@ -114,16 +114,60 @@ def handle_get_users():
 
     return jsonify(users), 200
 
+# put/get userFavs
+@api.route('/user/favorites', methods=['PUT'])
+@jwt_required()
+def handle_put_user_fav():
+    print("Incoming request:", request.get_json())
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    
+    data = request.get_json()
+    user.favorites = data.get('favorites', '')
+    db.session.commit()
+
+    return jsonify({'message': 'fav updated'}), 200
+
 @api.route('/user/favorites', methods=['GET'])
-def handle_user_favs():
+@jwt_required()
+def handle_get_user_favs():
     body = request.get_json()
     user_name = body['user_name']
 
-    user = User.query.filter_by(user_name = user_name)
-    favorites = user['favorites']
-    watch_later = user['watch_later']
+    user = User.query.filter_by(user_name = user_name).first()
 
-    return jsonify(favorites, watch_later), 200
+    if user and user.favorites != None:        
+        return jsonify({'favorites': user.favorites}), 200
+
+
+    return jsonify({user.favorites}), 200
+
+# put/get userWatches
+@api.route('/user/watches', methods=['PUT'])
+@jwt_required()
+def handle_put_user_watch():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    
+    data = request.get_json()
+    user.watches = data.get('watches', '')
+    db.session.commit()
+
+    return jsonify({'message': 'Watch list updated'}), 200
+
+@api.route('/user/watches', methods=['GET'])
+@jwt_required()
+def handle_get_user_watchList():
+    body = request.get_json()
+    user_name = body['user_name']
+
+    user = User.query.filter_by(user_name = user_name).first()
+
+    if user and user.watches != None:        
+        return jsonify({'watches': user.watches}), 200
+
+
+    return jsonify({user.watches}), 200
 
 
 # Reviews GET/POST/DELETE

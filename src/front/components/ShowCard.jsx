@@ -2,23 +2,69 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faBookmark, faComment } from "@fortawesome/free-solid-svg-icons";
 
 export const ShowCard = (props) => {
   const { store, dispatch } = useGlobalReducer();
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
+  const[bookmarked, setBookmarked] = useState(false);
+  const[favorites, setFavorites] = useState([]);  
+  const [watchList, setWatchList] = useState([]);
 
   const shortenedOverview =
     props.overview && props.overview.length > 50
       ? props.overview.slice(0, 50) + "..."
       : props.overview;
 
-  const toggleLiked = (name) => {
-    setLiked(!liked);
-    // if(liked){
-    dispatch({ type: "toggle_favorites", payload: name });
-    // }
+ const toggleLiked = () => {
+  setLiked(!liked);
+  if(liked){
+    handleLiked(id);
+  }  
+};
+
+const handleLiked = async () => {
+    const token = sessionStorage.getItem('access_token');
+    try {
+      const response = await fetch(import.meta.env.VITE_BACKEND_URL + '/user/favorites', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify({ favorites: props.id })
+      });
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error("Failed to update favs", error);
+    }
+  };  
+
+  const toggleBookmarked = () => {
+    setBookmarked(!bookmarked);
+    if(bookmarked){      
+      handleWatchList(id);     
+    }
+  };
+
+  const handleWatchList = async () => {
+    const token = sessionStorage.getItem('access_token');
+    try {
+        const response = await fetch(import.meta.env.VITE_BACKEND_URL + '/user/favorites', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({favorites: props.id})
+        });
+        const data = await response.json();
+        console.log(data.message);
+    } catch (error) {
+        console.error("Failed to update favs")
+    }       
   };
 
   const onShowClick = () => {};
@@ -65,7 +111,23 @@ export const ShowCard = (props) => {
             </p>
           </div>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item">An item</li>
+            <li className="list-group-item">
+              <div className="d-flex justify-content-around">
+                <span
+                onClick={() => toggleBookmarked(props.name)}
+                style={{ color: bookmarked ? 'red' : 'gray'}} 
+                className="icon">
+                 <FontAwesomeIcon icon={faBookmark} />
+                </span>
+                <span><FontAwesomeIcon icon={faComment} /></span>
+                <span
+                  onClick={() => toggleLiked(props.name)}
+                  style={{ color: liked ? 'red' : 'gray'}} 
+                  className="icon">
+                  <FontAwesomeIcon icon={faHeart} />
+                </span>
+              </div>              
+            </li>
             <li className="list-group-item">A second item</li>
             <li className="list-group-item">A third item</li>
           </ul>

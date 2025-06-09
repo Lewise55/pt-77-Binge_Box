@@ -16,6 +16,8 @@ import { ShowDetails } from "./pages/ShowDetails";
 import { WatchEpisode } from "./pages/WatchEpisode";
 import { Reviews } from "./pages/Reviews";
 import { WatchTrailer } from "./pages/WatchTrailer";
+import { MovieTailer } from "./pages/MovieTrailer";
+import { MovieDetails } from "./pages/MovieDetails";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -39,8 +41,13 @@ export const router = createBrowserRouter(
         path="/showDetails/:season_number/:series_id"
         element={<ShowDetails />}
       />
+      <Route
+        path="/movieDetails/:movie_id"
+        element={<MovieDetails />}
+      />
       <Route path="/watchEpisode" element={<WatchEpisode />} />
       <Route path="/watchTrailer/:series_id" element={<WatchTrailer />} />
+      <Route path="/watchMovieTrailer/:id" element={<MovieTailer />} />
       <Route path="/reviews" element={<Reviews />} />
     </Route>
   )
