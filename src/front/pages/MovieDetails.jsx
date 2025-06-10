@@ -1,52 +1,60 @@
 import React, { useEffect, useState } from "react"
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 
 export const MovieDetails = () => {
 
     const { store, dispatch } = useGlobalReducer();
-    const [movieData, setMovieData] = useState();
+    const [movieData, setMovieData] = useState("");
     const {id} = useParams();
 
     useEffect(() => {
         const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
         const getMovie = async() => {
-            let response = await fetch(`https://api.themoviedb.org/3/movie/${id}?append_to_response=videos,images`, {
+            let response = await fetch(`https://api.themoviedb.org/3/movie/${id}`, {
                 method: 'GET',
-                    headers: {
-                        Authorization: "Bearer " + API_KEY,
-                        "Content-Type": "application/json"
-                    },
-            });            
+                headers: {
+                    Authorization: "Bearer " + API_KEY,
+                    "Content-Type": "application/json"
+                },
+            });
+            const data = await response.json();            
             if(!response.ok){
                 console.log("movie failed to load");
                 return;                
-            }
-            let data = await response.json();
+            }            
             setMovieData(data);
         }
         getMovie();
-    }, [id])
-    
-    if (!movieData) {
-        return <p>Loading movie details...</p>;
-    }
+    }, [id])    
 
     return (
-        <div
-            className="text-center mt-5"
+        <div className="text-center mt-5">
+            <div className="cover"
             style={{
                 height: "90vh",
                 backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}")`,
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 position: "relative",
-            }}
-        >   
-            <img src="">https://image.tmdb.org/t/p/w1280${movieData.poster_path}</img>
-            <h1>{movieData.title}</h1>
-            <p>{movieData.overview}</p>
-            {/* Render other details as needed */}
+            }}></div>
+            <div className="d-flex m-5 ">
+                <img src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}/>
+                <div className="text-light p-3">
+                    <h1>{movieData.title}</h1> 
+                    <p>{movieData.tagline}</p>                                                         
+                    <p>{movieData.overview}</p>
+                    <p>Release Date: {movieData.release_date}</p>  
+                    <p>Runtime: {movieData.runtime}</p>
+                    <p>{movieData.vote_average}</p>
+                    <p>{movieData.origin_country}</p>      
+                    <div className="buttons">
+                        <Link className="btn btn-dark" to={`/watchMovieTrailer/${id}`}>Watch Trailer</Link>
+                        <Link className="btn btn-dark mx-2" to={`/reviews/movie/${id}`}>Rate & Review</Link>                    
+                    </div>              
+                </div>                 
+            </div>
+            
         </div>
-    );
+    );    
 }; 

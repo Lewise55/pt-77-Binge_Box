@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-export function Comments({ reviewId, itemType, itemId }) {
+export const Comments = ({ reviewId, itemType, itemId }) => {
   const [comments, setComments] = useState([]);
   const [text, setText] = useState("");
 

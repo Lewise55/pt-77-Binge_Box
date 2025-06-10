@@ -130,8 +130,8 @@ const handleLiked = async () => {
                 </span>
               </div>              
             </li>
-            <li className="list-group-item">A second item</li>
-            <li className="list-group-item">A third item</li>
+            <li className="list-group-item">{props.first_air_date}</li>
+            <li className="list-group-item">{props.vote_average}</li>
           </ul>
           <div className="card-body d-flex">
             <Link className="mx-2" to={`/showDetails/1/${props.id}`}>

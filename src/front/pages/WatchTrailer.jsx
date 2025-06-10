@@ -6,13 +6,13 @@ export const WatchTrailer = () => {
   const { store, dispatch } = useGlobalReducer();
   const [trailers, setTrailers] = useState([]);
 
-  const { series_id, season_numbers } = useParams();
+  const { series_id,} = useParams();
 
   useEffect(() => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
     const getTrailer = async () => {
       const response = await fetch(
-        `https://api.themoviedb.org/3/tv/${series_id}/season/1?append_to_response=videos,images`,
+        `https://api.themoviedb.org/3/tv/${series_id}?api_key=${API_KEY}&append_to_response=videos,images`,
         {
           method: "GET",
           headers: {

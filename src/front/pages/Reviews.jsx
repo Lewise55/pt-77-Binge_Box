@@ -3,7 +3,8 @@ import { useParams } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHeart, faReply, faStar } from "@fortawesome/free-solid-svg-icons";
-import { getMoviesPlayingNow } from "../hooks/actions.js";
+import { Comments } from "../components/Comments.jsx";
+import { ReviewBackground } from "../components/ReviewBackground.jsx";
 
 export const Reviews = () => {
     const { store, dispatch } = useGlobalReducer();
@@ -91,6 +92,7 @@ export const Reviews = () => {
 
     return (
         <div className="text-start mt-5">
+            <ReviewBackground itemType={itemType} itemId={itemId}></ReviewBackground>
             <div className="card text-bg-dark">
                 <div className="card-header">
                     Reviews
@@ -172,6 +174,7 @@ export const Reviews = () => {
                     </div>
                 </div>
                 ))}
+            
         </div>
     );
 }; 

@@ -9,7 +9,7 @@ export const MovieCard = (props) => {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const[bookmarked, setBookmarked]= useState(false);
-  const[selectedMovie, setSelectedMovie] = useState("");
+  
 
   const shortenedOverview =
     props.overview && props.overview.length > 50
@@ -75,7 +75,7 @@ const handleLiked = async () => {
           className="card h-100 bg-dark text-light mx-2"
           style={{ minWidth: "18rem" }}
         >
-          <h5 className="showCard-title">{props.name}</h5>
+          <h5 className="movieCard-title">{props.original_title}</h5>
           <div className="card-img-wrapper">
             <img
               src={"https://image.tmdb.org/t/p/w500/" + props.poster_path}
@@ -129,8 +129,8 @@ const handleLiked = async () => {
                 </span>
               </div>              
             </li>
-            <li className="list-group-item">A second item</li>
-            <li className="list-group-item">A third item</li>
+            <li className="list-group-item">{props.first_air_date}</li>
+            <li className="list-group-item">{props.vote_average}</li>
           </ul>
           <div className="card-body d-flex">
             <Link className="mx-2" to={`/movieDetails/${props.id}`}>

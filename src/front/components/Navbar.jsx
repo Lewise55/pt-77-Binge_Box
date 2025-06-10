@@ -12,6 +12,19 @@ export const Navbar = () => {
 					<Link to="/profile">
 						<button className="btn btn-primary mx-2">Profile</button>
 					</Link>
+					{/* <ul className="dropdown-menu">
+						{store.favorites?.length > 0 ? (
+							store.favorites.map((item, index) => (
+							<li key={index}>
+								<a className="dropdown-item" href="#">{item}</a>
+							</li>
+							))
+						) : (
+							<li>
+								<span className="dropdown-item-text">No favorites yet</span>
+							</li>
+						)}							
+					</ul> */}
 				</div>
 				
 					<div className="dropdown">

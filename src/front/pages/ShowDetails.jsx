@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react"
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { EpisodeCard } from '../components/EpisodeCard.jsx';
-import { Link } from "react-router-dom";
+
 
 
 export const ShowDetails = () => {
     const { store, dispatch } = useGlobalReducer();
     const [allSeasonsData, setAllSeasonsData] = useState([]);
+    const[seriesData, setSeriesData] = useState([]);
     const [episode, setEpisode] = useState([]);
     const [seasonImages, setSeasonImages] = useState([]);
     const [seasonVideos, setSeasonVideos] = useState([]);
@@ -35,6 +36,7 @@ export const ShowDetails = () => {
                     console.log("Could not load show data");
                     return;
                 }
+                setSeriesData(showData);
                 seasonNums = showData.seasons
                     .filter(s => s.season_number > 0)
                     .map(s => s.season_number);
@@ -66,12 +68,25 @@ export const ShowDetails = () => {
 
     return (
         <div className="text-center mt-5">
+            <div 
+                className="cover"
+                style={{
+                    height: "90vh",
+                    backgroundImage: `url("https://image.tmdb.org/t/p/w1280${seriesData.backdrop_path}")`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    position: "relative",}}>
+                </div>
+                <div className="buttons mt-3 ">
+                    <Link className="btn btn-dark mx-3" to={`/watchTrailer/${series_id}`}>Watch Trailer</Link>
+                    <Link className="btn btn-dark mx-3" to={`/reviews/series/${series_id}`}>Rate & Review</Link>                    
+                </div>  
             {allSeasonsData.length === 0 ? (
                 <p>Loading seasons...</p>
             ) : (
                 allSeasonsData.map((season, idx) => (
-                    <div key={season.id || idx}>
-                        <h2 className="mt-3">Season: {season.season_number}</h2>
+                    <div key={season.id || idx}>                        
+                        <h2 className="text-bg-dark mt-5 p-2">Season: {season.season_number}</h2>
                         <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto">
                             {Array.isArray(season.episodes) && season.episodes.length > 0 ? (
                                 season.episodes.map((episode, index) => (

@@ -42,7 +42,7 @@ export const router = createBrowserRouter(
         element={<ShowDetails />}
       />
       <Route
-        path="/movieDetails/:movie_id"
+        path="/movieDetails/:id"
         element={<MovieDetails />}
       />
       <Route path="/watchEpisode" element={<WatchEpisode />} />

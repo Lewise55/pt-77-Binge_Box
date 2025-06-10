@@ -1,36 +1,61 @@
  body {
-  background: linear-gradient(109.6deg, rgb(0, 37, 84) 11.2%, rgba(0, 37, 84, 0.32) 100.2%);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  margin: 0;
-  padding: 0;
+    background: linear-gradient(109.6deg, rgb(0, 37, 84) 11.2%, rgba(0, 37, 84, 0.32) 100.2%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 0;
+    padding: 0;
 }
 
-.showCard-title {
-  height: 40px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+.showCard-title, .movieCard-title, .episodeCard-title {
+    height: 40px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .card-img-wrapper {
-  width: 100%;             /* or a fixed px value if you prefer */
-  height: 500px;           /* set as needed */
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f5f5f5;     /* optional: placeholder bg */
+    width: 100%;             
+    height: 500px;           
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;     
+}
+
+.EpisodeCard-img-wrapper{
+    width: 100%;             
+    height: 250px;           
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;     
 }
 
 .card-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;       /* This ensures uniform size and crops as needed */
-  display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;       
+    display: block;
+}
+
+.card {
+    display: flex;
+    /* Optionally for wrapping */
+    flex-wrap: wrap;
+    /* Optionally for spacing */
+    gap: 1rem;
+    flex: 1 1 300px; /* or your preferred width */
+    display: flex;
+    flex-direction: column;
+}
+
+.card-body {
+  flex: 1; /* This makes all .card-body the same height */
 }
 
 /* video player */

@@ -7,4 +7,3 @@ CORS(app, resources={r"/*": {"origins": "https://super-space-goggles-977vwqvr479
      allow_headers=["Content-Type", "Authorization"],
      methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"])
 
-from . import routes
