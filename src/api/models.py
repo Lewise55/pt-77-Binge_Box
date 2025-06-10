@@ -68,6 +68,7 @@ class Reviews(db.Model):
     user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
     user_name: Mapped[str] = mapped_column(String(120), nullable=False)
     item_type: Mapped[str] = mapped_column(String(520), nullable=False)
+    item_id: Mapped[int] = mapped_column(Integer, nullable=False)
     text: Mapped[str] = mapped_column(Text, nullable=False)
     rating: Mapped[int] = mapped_column(Integer, nullable=False)
     timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
@@ -79,6 +80,7 @@ class Reviews(db.Model):
             "user_id": self.user_id,
             "user_name": self.user_name,
             "item_type": self.item_type,
+            "item_id": self.item_id,
             "text": self.text,
             "rating": self.rating,
             "timestamp": self.timestamp,

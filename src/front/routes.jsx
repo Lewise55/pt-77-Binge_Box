@@ -48,7 +48,7 @@ export const router = createBrowserRouter(
       <Route path="/watchEpisode" element={<WatchEpisode />} />
       <Route path="/watchTrailer/:series_id" element={<WatchTrailer />} />
       <Route path="/watchMovieTrailer/:id" element={<MovieTailer />} />
-      <Route path="/reviews" element={<Reviews />} />
+      <Route path="/reviews/:type/:id" element={<Reviews />} />
     </Route>
   )
 );

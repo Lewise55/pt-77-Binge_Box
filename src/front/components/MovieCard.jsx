@@ -9,6 +9,7 @@ export const MovieCard = (props) => {
   const [expanded, setExpanded] = useState(false);
   const [liked, setLiked] = useState(false);
   const[bookmarked, setBookmarked]= useState(false);
+  const[selectedMovie, setSelectedMovie] = useState("");
 
   const shortenedOverview =
     props.overview && props.overview.length > 50
@@ -65,7 +66,7 @@ const handleLiked = async () => {
     }       
   };
 
-  const onShowClick = () => {};
+  const onMovieClick = () => {};
 
   return (
     <div className="text-center mt-5">
@@ -117,7 +118,9 @@ const handleLiked = async () => {
                 className="icon">
                   <FontAwesomeIcon icon={faBookmark} />
                 </span>
-                <span style={{color: 'gray'}}><FontAwesomeIcon icon={faComment} /></span>
+                <Link to={`/reviews/movie/${props.id}`}>
+                  <span style={{color: 'gray'}}><FontAwesomeIcon icon={faComment} /></span>
+                </Link>                
                 <span
                   onClick={() => toggleLiked(props.id)}
                   style={{ color: liked ? 'red' : 'gray'}} 
@@ -133,7 +136,7 @@ const handleLiked = async () => {
             <Link className="mx-2" to={`/movieDetails/${props.id}`}>
               <button
                 className="btn btn-light"
-                onClick={() => onShowClick(props.id, 1)}
+                onClick={() => onMovieClick(props.id, 1)}
               >
                 View Details
               </button>

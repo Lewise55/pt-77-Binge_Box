@@ -5,7 +5,15 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-light bg-light">
 			<div className="container">
-				<Link to="/"></Link>
+				<div >
+					<Link to="/">
+						<button className="btn btn-primary">Home</button>
+					</Link>
+					<Link to="/profile">
+						<button className="btn btn-primary mx-2">Profile</button>
+					</Link>
+				</div>
+				
 					<div className="dropdown">
 						<button className="btn btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 							<i className="fa-solid fa-bars"></i>

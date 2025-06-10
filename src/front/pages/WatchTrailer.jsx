@@ -49,7 +49,6 @@ export const WatchTrailer = () => {
         referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
       ></iframe>
-    </div>
-    
+    </div>    
   );
 };

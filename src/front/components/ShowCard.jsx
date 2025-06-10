@@ -119,7 +119,9 @@ const handleLiked = async () => {
                 className="icon">
                  <FontAwesomeIcon icon={faBookmark} />
                 </span>
-                <span><FontAwesomeIcon icon={faComment} /></span>
+                <Link to={`/reviews/series/${props.id}`}>
+                  <span style={{color: 'gray'}}><FontAwesomeIcon icon={faComment} /></span>
+                </Link>                
                 <span
                   onClick={() => toggleLiked(props.name)}
                   style={{ color: liked ? 'red' : 'gray'}} 

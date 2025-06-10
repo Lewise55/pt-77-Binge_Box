@@ -16,10 +16,10 @@ flask = "*"
 flask-migrate = "*"
 python-dotenv = "*"
 flask-swagger = "*"
-flask-cors = "*"
 flask-jwt-extended = "*"
 flask-admin = "*"
 psycopg2-binary = "*"
+flask-cors = "*"
 
 [requires]
 python_version = "3.13"

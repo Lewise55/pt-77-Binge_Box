@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e7e5ff0c69d1
+Revision ID: 74a93166f872
 Revises: 
-Create Date: 2025-06-09 10:45:29.505558
+Create Date: 2025-06-10 09:18:37.287114
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e7e5ff0c69d1'
+revision = '74a93166f872'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -62,6 +62,7 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('user_name', sa.String(length=120), nullable=False),
     sa.Column('item_type', sa.String(length=520), nullable=False),
+    sa.Column('item_id', sa.Integer(), nullable=False),
     sa.Column('text', sa.Text(), nullable=False),
     sa.Column('rating', sa.Integer(), nullable=False),
     sa.Column('timestamp', sa.DateTime(), server_default=sa.text('now()'), nullable=False),
@@ -72,8 +73,6 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_name', sa.String(length=120), nullable=False),
     sa.Column('watch_later_id', sa.Integer(), nullable=False),
-    sa.Column('continue_watching_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['continue_watching_id'], ['shows.id'], ),
     sa.ForeignKeyConstraint(['user_name'], ['user.user_name'], ),
     sa.ForeignKeyConstraint(['watch_later_id'], ['shows.id'], ),
     sa.PrimaryKeyConstraint('id')
