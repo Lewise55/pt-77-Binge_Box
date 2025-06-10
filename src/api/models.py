@@ -73,6 +73,7 @@ class Reviews(db.Model):
     rating: Mapped[int] = mapped_column(Integer, nullable=False)
     timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
     favorites: Mapped["Favorites"] = relationship(back_populates = "fav_review")
+    comments: Mapped["Comments"] = relationship(back_populates = "review")
 
     def serialize(self):
         return {
@@ -85,21 +86,26 @@ class Reviews(db.Model):
             "rating": self.rating,
             "timestamp": self.timestamp,
             "favorites": self.favorites,
-
+            "comments": self.comments
         }
 
     
 class Comments(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
+    review_id: Mapped[int] = mapped_column(ForeignKey('reviews.id'), nullable=False)
     user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    comment: Mapped[str] = mapped_column(String(520), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    date: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
     favorites: Mapped["Favorites"] = relationship(back_populates = "fav_comment")
 
     def serialize(self):
         return {
             "id": self.id,
+            "review_id": self.review_id,
             "user_name": self.user_name,
-            "comment": self.comment,
+            "text": self.text,
+            "date": self.date,
+            "favorites": self.favorites
         }
 
 class Tags(db.Model):

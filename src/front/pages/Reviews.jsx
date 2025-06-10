@@ -11,6 +11,7 @@ export const Reviews = () => {
     const [liked, setLiked] = useState(false);
     const [itemType, setItemType] = useState('');
     const [itemId, setItemId] = useState('');
+    const [expandedReviewId, setExpandedReviewId] = useState(null);
     const [reviews, setReviews] = useState([])
     const [review, setReview] = useState({
         itemId: itemId, 
@@ -147,16 +148,30 @@ export const Reviews = () => {
                     
                 </div>
             </div>
-            {Array.isArray(reviews) && reviews.length > 0 ? (
-                reviews.map((review, index) => (
-                    <div key={index}>
-                        <p>{review.text}</p>
-                        <p>Rating: {review.rating}</p>
+            {reviews.map((review, index) => (
+                <div key={review.id || index} className="card my-3">
+                    <div className="card-body">
+                    <p>{review.text}</p>
+                    <p>Rating: {review.rating}</p>
+                    <button
+                        className="btn btn-sm btn-link"
+                        onClick={() => setExpandedReviewId(expandedReviewId === review.id ? null : review.id)}
+                    >
+                        Reply
+                    </button>
+
+                    {expandedReviewId === review.id && (
+                        <div className="mt-3">
+                        <Comments
+                            reviewId={review.id}
+                            itemType={itemType}
+                            itemId={itemId}
+                        />
+                        </div>
+                    )}
                     </div>
-                ))
-            ) : (
-                <p>No reviews found.</p>
-            )}
+                </div>
+                ))}
         </div>
     );
 }; 

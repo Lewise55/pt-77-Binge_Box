@@ -226,42 +226,23 @@ def put_review():
     return jsonify(review.serialize()), 200
 
 
-# Comments GET/POST/DELETE
-@api.route('/comments', methods=['GET'])
-def handle_get_comments():
-    comments = Comments.query.all().first()
+# GET comments for a review/ POST a comment
+@api.route("/reviews/<item_type>/<int:item_id>/comments")
+def get_comments(item_type, item_id):
+    review_id = request.args.get("review_id")
+    comments = Comments.query.filter_by(review_id=review_id).all()
+    return jsonify([c.serialize() for c in comments])
 
-    return jsonify(comments), 200
-
-@api.route('/comments/<int:comments_id>', methods=['GET'])
-def handle_get_each_comment(comment_id):
-    comment = Comments.query.filter_by(id = comment_id).first() 
-
-    return jsonify(comment), 200
-
-@api.route('/comments/<int:comments_id>', methods=['POST'])
-def handle_fav_comment(comment_id):
-    body = request.get_json()
-    user_name = body['user_name']
-    
-    comment_fav = Favorites(user_name = user_name, comment_id = comment_id, review_id = None, tag_id = None, show_id = None)
-    db.session.add(comment_fav)
+@api.route("/reviews/<item_type>/<int:item_id>/comments", methods=["POST"])
+def post_comment(item_type, item_id):
+    data = request.get_json()
+    comment = Comments(
+        review_id=data["review_id"], 
+        user_name=data["user_name"], 
+        text=data["text"])
+    db.session.add(comment)
     db.session.commit()
-
-    return jsonify('Comment favorite has been created'), 200
-
-@api.route('/comments/<int:comments_id>', methods=['DELETE'])
-def handle_delete_fav_comment(comment_id):
-    body = request.get_json()
-    user_name = body['user_name']
-
-    fav = Favorites.query.filter_by(user_name = user_name, comment_id = comment_id).first()
-        
-    db.session.delete(fav)
-    db.session.commit()
-
-    return jsonify('Comment favorite has been removed'), 200
-
+    return jsonify(comment.serialize()), 201
 
 # Tags GET/POST/DELETE
 @api.route('/tags', methods=['GET'])
