@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faHeart, faBookmark, faComment  } from "@fortawesome/free-solid-svg-icons";
+import { StarRating } from "./StarRating.jsx";
 
 export const MovieCard = (props) => {
   const { store, dispatch } = useGlobalReducer();
@@ -65,6 +66,9 @@ const handleLiked = async () => {
         console.error("Failed to update favs")
     }       
   };
+
+  
+  
 
   const onMovieClick = () => {};
 
@@ -129,8 +133,13 @@ const handleLiked = async () => {
                 </span>
               </div>              
             </li>
-            <li className="list-group-item">{props.first_air_date}</li>
-            <li className="list-group-item">{props.vote_average}</li>
+            <li className="list-group-item"><b>Release Date:</b> {props.release_date}</li>
+            <li className="list-group-item">
+              <span className="Vote text-center">
+                <StarRating vote_average={props.vote_average} />
+                {props.vote_average}
+              </span>              
+            </li>
           </ul>
           <div className="card-body d-flex">
             <Link className="mx-2" to={`/movieDetails/${props.id}`}>

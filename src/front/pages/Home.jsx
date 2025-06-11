@@ -8,7 +8,9 @@ import { Navigate } from "react-router-dom";
 import { ShowCard } from "../components/ShowCard.jsx";
 import { MovieCard } from "../components/MovieCard.jsx";
 import { Carousel } from "../components/Carousel.jsx";
-import { faMoneyBillWave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+
 
 export const Home = () => {
   const { 
@@ -100,6 +102,7 @@ export const Home = () => {
 
   // console.log(shows, airingToday, topRated, "HERE");
 
+  
   return (
     <div className="text-center mt-5">
       <Carousel />
@@ -114,11 +117,10 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
@@ -138,11 +140,10 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
@@ -162,11 +163,10 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
@@ -186,11 +186,10 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))

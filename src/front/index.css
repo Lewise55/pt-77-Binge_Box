@@ -58,6 +58,14 @@
   flex: 1; /* This makes all .card-body the same height */
 }
 
+.list-group-item {
+  height: auto;
+}
+
+.vote {
+  height: auto;
+}
+
 /* video player */
 
 body {
