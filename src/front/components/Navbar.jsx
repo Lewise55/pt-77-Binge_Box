@@ -29,15 +29,15 @@ export const Navbar = () => {
 				</Link>
 				<h2>BINGE BOX</h2>
 				<div className="ml-auto">
-<<<<<<< HEAD
+
 					<Link className="mx-2" to="/signup">
 						<button className="btn btn-primary">Signup</button>
 					</Link>
 					<Link to="/login">
-=======
-					<Link to="/demo">
->>>>>>> ca480cf54b354d3e9b823b20cf0ea148af34ff52
 						<button className="btn btn-primary">Login</button>
+					</Link>
+					<Link to="/demo">
+						<button className="btn btn-primary">Home</button>
 					</Link>
 				</div>
 			</div>
