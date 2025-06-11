@@ -13,7 +13,7 @@ api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-
+# getUser/ login info
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -107,98 +107,142 @@ def handle_get_image():
     return jsonify({user.user_image}), 200
     
 
-# get users
+# get account users
 @api.route('/user', methods=['GET'])
 def handle_get_users():
     users = User.query.all()
 
     return jsonify(users), 200
 
+# put/get userFavs
+@api.route('/user/favorites', methods=['PUT'])
+@jwt_required()
+def handle_put_user_fav():
+    print("Incoming request:", request.get_json())
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
+    
+    data = request.get_json()
+    user.favorites = data.get('favorites', '')
+    db.session.commit()
+
+    return jsonify({'message': 'fav updated'}), 200
+
 @api.route('/user/favorites', methods=['GET'])
-def handle_user_favs():
+@jwt_required()
+def handle_get_user_favs():
     body = request.get_json()
     user_name = body['user_name']
 
-    user = User.query.filter_by(user_name = user_name)
-    favorites = user['favorites']
-    watch_later = user['watch_later']
+    user = User.query.filter_by(user_name = user_name).first()
 
-    return jsonify(favorites, watch_later), 200
+    if user and user.favorites != None:        
+        return jsonify({'favorites': user.favorites}), 200
 
 
-# Reviews GET/POST/DELETE
-@api.route('/reviews', methods=['GET'])
-def handle_get_reviews():
-    reviews = Reviews.query.all().first()
+    return jsonify({user.favorites}), 200
 
-    return jsonify(reviews), 200
-
-@api.route('/reviews/<int:reviews_id>', methods=['GET'])
-def handle_get_each_review(review_id):
-    review = Reviews.query.filter_by(id = review_id).first() 
-
-    return jsonify(review), 200
-
-@api.route('/reviews/<int:reviews_id>', methods=['POST'])
-def handle_fav_review(review_id):
-    body = request.get_json()
-    user_name = body['user_name']
+# put/get userWatches
+@api.route('/user/watches', methods=['PUT'])
+@jwt_required()
+def handle_put_user_watch():
+    user_email = get_jwt_identity()
+    user = User.query.filter_by(email = user_email).first()
     
-    review_fav = Favorites(user_name = user_name, review_id = review_id, comment_id = None, tag_id = None, show_id = None)
-    db.session.add(review_fav)
+    data = request.get_json()
+    user.watches = data.get('watches', '')
     db.session.commit()
 
-    return jsonify('Review favorite has been created'), 200
+    return jsonify({'message': 'Watch list updated'}), 200
 
-@api.route('/reviews/<int:reviews_id>', methods=['DELETE'])
-def handle_delete_fav_review(review_id):
+@api.route('/user/watches', methods=['GET'])
+@jwt_required()
+def handle_get_user_watchList():
     body = request.get_json()
     user_name = body['user_name']
 
-    fav = Favorites.query.filter_by(user_name = user_name, review_id = review_id).first()
-        
-    db.session.delete(fav)
+    user = User.query.filter_by(user_name = user_name).first()
+
+    if user and user.watches != None:        
+        return jsonify({'watches': user.watches}), 200
+
+
+    return jsonify({user.watches}), 200
+
+
+# Reviews GET/POST/PUT/DELETE
+@api.route('/reviews', methods=['GET', 'POST'])
+def reviews():
+    if request.method == 'POST':
+        data = request.get_json()
+
+        required_fields = ["user_id", "user_name", "item_id", "item_type", "text", "rating"]
+        missing = [field for field in required_fields if not data.get(field)]
+        if missing:
+            return jsonify({"error": f"Missing fields: {', '.join(missing)}"}), 400
+
+        if not isinstance(data["rating"], int) or not (0 <= data["rating"] <= 10):
+            return jsonify({"error": "Rating must be an integer between 0 and 10"}), 400        
+        ...
+        return jsonify(success=True)
+    else:
+        # Handle GET with query parameters
+        item_id = request.args.get('itemId')
+        item_type = request.args.get('itemType')
+        if not item_id or not item_type:
+            return jsonify({"error": "Missing itemId or itemType"}), 400
+        reviews = Reviews.query.filter_by(item_id=item_id, item_type=item_type).all()
+        return jsonify([r.serialize() for r in reviews])
+
+@api.route('/reviews/movie/<int:item_id>', methods=['GET'])
+def get_movie_reviews(item_id):
+    reviews = Reviews.query.filter_by(item_id=item_id, item_type='movie').all()
+    return jsonify([r.serialize() for r in reviews])
+
+@api.route('/reviews/series/<int:series_id>', methods=['GET'])
+def get_series_reviews(series_id):
+    reviews = Reviews.query.filter_by(item_id=series_id, item_type='series').all()
+    return jsonify([r.serialize() for r in reviews])
+
+@api.route('/user/review', methods=['PUT'])
+@jwt_required()
+def put_review():
+    user_id = get_jwt_identity()
+    data = request.get_json()
+    item_id = data.get("itemId")
+    item_type = data.get("itemType")
+    text = data.get("text")
+    rating = data.get("rating")
+
+    # Find existing review or create new
+    review = Reviews.query.filter_by(user_id=user_id, item_id=item_id, item_type=item_type).first()
+    if review:
+        review.text = text
+        review.rating = rating
+    else:
+        review = Reviews(user_id=user_id, item_id=item_id, item_type=item_type, text=text, rating=rating)
+        db.session.add(review)
     db.session.commit()
+    return jsonify(review.serialize()), 200
 
-    return jsonify('Review favorite has been removed'), 200
 
+# GET comments for a review/ POST a comment
+@api.route("/reviews/<item_type>/<int:item_id>/comments")
+def get_comments(item_type, item_id):
+    review_id = request.args.get("review_id")
+    comments = Comments.query.filter_by(review_id=review_id).all()
+    return jsonify([c.serialize() for c in comments])
 
-# Comments GET/POST/DELETE
-@api.route('/comments', methods=['GET'])
-def handle_get_comments():
-    comments = Comments.query.all().first()
-
-    return jsonify(comments), 200
-
-@api.route('/comments/<int:comments_id>', methods=['GET'])
-def handle_get_each_comment(comment_id):
-    comment = Comments.query.filter_by(id = comment_id).first() 
-
-    return jsonify(comment), 200
-
-@api.route('/comments/<int:comments_id>', methods=['POST'])
-def handle_fav_comment(comment_id):
-    body = request.get_json()
-    user_name = body['user_name']
-    
-    comment_fav = Favorites(user_name = user_name, comment_id = comment_id, review_id = None, tag_id = None, show_id = None)
-    db.session.add(comment_fav)
+@api.route("/reviews/<item_type>/<int:item_id>/comments", methods=["POST"])
+def post_comment(item_type, item_id):
+    data = request.get_json()
+    comment = Comments(
+        review_id=data["review_id"], 
+        user_name=data["user_name"], 
+        text=data["text"])
+    db.session.add(comment)
     db.session.commit()
-
-    return jsonify('Comment favorite has been created'), 200
-
-@api.route('/comments/<int:comments_id>', methods=['DELETE'])
-def handle_delete_fav_comment(comment_id):
-    body = request.get_json()
-    user_name = body['user_name']
-
-    fav = Favorites.query.filter_by(user_name = user_name, comment_id = comment_id).first()
-        
-    db.session.delete(fav)
-    db.session.commit()
-
-    return jsonify('Comment favorite has been removed'), 200
-
+    return jsonify(comment.serialize()), 201
 
 # Tags GET/POST/DELETE
 @api.route('/tags', methods=['GET'])

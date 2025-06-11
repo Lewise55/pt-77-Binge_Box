@@ -7,14 +7,14 @@ import {
     getUser as handle_getUser, 
     getShows, 
     getAiringToday, 
-    getTopRated, 
-    getGenre,
-    getShowSeason, 
-    getSeasonImage,
-    getSeasonVideos,
-    getShowEpisodes,
-    getEpisodeImages,
-    getEpisodeVideos
+    getTopRated,
+    getTrending, 
+    getGenres,
+    getPopularMovies,
+    getTopRatedMovies,
+    getMoviesPlayingNow,
+    getUpcomingMovies,
+    getTrendingMovies,
 } from "./actions"
 
 // Create a context to hold the global state of the application
@@ -34,13 +34,13 @@ export function StoreProvider({ children }) {
         getShows: (payload) => getShows(dispatch, payload),
         getAiringToday: (payload) => getAiringToday(dispatch, payload),
         getTopRated: (payload) => getTopRated(dispatch, payload),
-        getGenre: (payload) => getGenre(dispatch, payload),
-        getShowSeason: (payload) => getShowSeason(dispatch, payload),
-        getSeasonImage: (payload) => getSeasonImage(dispatch, payload),
-        getSeasonVideos: (payload) => getSeasonVideos(dispatch, payload),
-        getShowEpisodes: (payload) => getShowEpisodes(dispatch, payload),
-        getEpisodeImages: (payload) => getEpisodeImages(dispatch, payload),
-        getEpisodeVideos: (payload) => getEpisodeVideos(dispatch, payload),
+        getTrending: (payload) => getTrending(dispatch, payload),
+        getGenres: (payload) => getGenres(dispatch, payload),
+        getPopularMovies: (payload) => getPopularMovies(dispatch, payload),
+        getTopRatedMovies: (payload) => getTopRatedMovies(dispatch, payload),
+        getMoviesPlayingNow: (payload) => getMoviesPlayingNow(dispatch, payload),
+        getUpcomingMovies: (payload) => getUpcomingMovies(dispatch, payload),
+        getTrendingMovies: (payload) => getTrendingMovies(dispatch, payload),
     }
     return <StoreContext.Provider value={{ store, dispatch, ...actions}}>
         {children}
@@ -58,13 +58,13 @@ export default function useGlobalReducer() {
         getShows, 
         getAiringToday, 
         getTopRated,
-        getGenre, 
-        getShowSeason, 
-        getSeasonImage, 
-        getSeasonVideos, 
-        getShowEpisodes, 
-        getEpisodeImages, 
-        getEpisodeVideos
+        getTrending,
+        getGenres,
+        getPopularMovies,
+        getTopRatedMovies,
+        getMoviesPlayingNow,
+        getUpcomingMovies,
+        getTrendingMovies, 
     } = useContext(StoreContext)
     return { 
         dispatch, 
@@ -75,12 +75,12 @@ export default function useGlobalReducer() {
         getShows, 
         getAiringToday, 
         getTopRated,
-        getGenre, 
-        getShowSeason, 
-        getSeasonImage, 
-        getSeasonVideos, 
-        getShowEpisodes, 
-        getEpisodeImages, 
-        getEpisodeVideos
+        getTrending,
+        getGenres,
+        getPopularMovies,
+        getTopRatedMovies,
+        getMoviesPlayingNow,
+        getUpcomingMovies,
+        getTrendingMovies,
     };
 }

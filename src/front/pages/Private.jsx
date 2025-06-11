@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera, faImage } from '@fortawesome/free-solid-svg-icons';
+import { ShowCard } from "../components/ShowCard.jsx";
+import { MovieCard } from "../components/MovieCard.jsx";
 
 export const Private = () => {
 
@@ -13,6 +15,8 @@ export const Private = () => {
     const [editBio, setEditBio] = useState(false)
     const [image, setImage] = useState(null)
     const [savedImage, setSavedImage] = useState(false)
+    const[favorites, setFavorites] = useState([]);  
+    const [watchList, setWatchList] = useState([]);    
     const navigate = useNavigate();
     
     useEffect(() => {
@@ -96,6 +100,34 @@ export const Private = () => {
                 setBio(data.user_image);
             }
             fetchImage();
+
+            const fetchlikes = async() => {
+            const token = sessionStorage.getItem('access_token');
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + '/user/favorites', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+                const data = await response.json();
+                setFavorites(data);
+            }
+            fetchlikes();
+
+            const fetchWatchList = async() => {
+            const token = sessionStorage.getItem('access_token');
+            const response = await fetch(import.meta.env.VITE_BACKEND_URL + '/user/favorites', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    }
+                });
+                const data = await response.json();
+                setWatchList(data);
+            }
+            fetchWatchList();
     }, []);
 
 
