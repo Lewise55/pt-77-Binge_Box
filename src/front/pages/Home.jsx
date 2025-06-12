@@ -11,23 +11,21 @@ import { Carousel } from "../components/Carousel.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-
 export const Home = () => {
-  const { 
-    store, 
-    dispatch, 
-    getShows, 
-    getAiringToday, 
+  const {
+    store,
+    dispatch,
+    getShows,
+    getAiringToday,
     getTopRated,
-    getTrending, 
+    getTrending,
     getGenres,
     getPopularMovies,
     getTopRatedMovies,
     getMoviesPlayingNow,
     getUpcomingMovies,
     getTrendingMovies,
-   } =
-    useGlobalReducer();
+  } = useGlobalReducer();
   const navigate = useNavigate();
   const [selectedShow, setSelectedShow] = [];
   const [selectedMovie, setSelectedMovie] = [];
@@ -37,7 +35,7 @@ export const Home = () => {
   const [trending, setTrending] = useState([]);
   const [genres, setGenres] = useState([]);
   const [action, setAction] = useState([]);
-  const [moviesPlayingNow, setMoviesPlayingNow] = useState([])
+  const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -85,24 +83,23 @@ export const Home = () => {
     setAiringToday(store.showsAiringToday);
     setTopRated(store.showsTopRated);
     setTrending(store.showsTrending);
-    setPopularMovies(store.popularMovies);    
+    setPopularMovies(store.popularMovies);
     setMoviesPlayingNow(store.moviesPlayingNow);
     setTopRatedMovies(store.topRatedMovies);
-    setTrendingMovies(store.trendingMovies)
+    setTrendingMovies(store.trendingMovies);
   }, [
-    store.shows, 
-    store.showsAiringToday, 
+    store.shows,
+    store.showsAiringToday,
     store.showsTopRated,
     store.showsTrending,
-    store.popularMovies,    
+    store.popularMovies,
     store.moviesPlayingNow,
     store.topRatedMovies,
-    store.trendingMovies
+    store.trendingMovies,
   ]);
 
   // console.log(shows, airingToday, topRated, "HERE");
 
-  
   return (
     <div className="text-center mt-5">
       <Carousel />
@@ -127,7 +124,7 @@ export const Home = () => {
         ) : (
           <p>No movies found.</p>
         )}
-      </div>     
+      </div>
 
       <h2 className="text-bg-dark mt-5 p-2">Trending Films</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
@@ -150,7 +147,7 @@ export const Home = () => {
         ) : (
           <p>No movies found.</p>
         )}
-      </div>       
+      </div>
 
       <h2 className="text-bg-dark mt-5 p-2">Popular Films</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
@@ -220,7 +217,7 @@ export const Home = () => {
           <p>No shows found.</p>
         )}
       </div>
-      
+
       <h2 className="text-bg-dark mt-5 p-2">Trending TV</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
         {Array.isArray(trending) && trending.length > 0 ? (
@@ -288,7 +285,7 @@ export const Home = () => {
         ) : (
           <p>No shows found.</p>
         )}
-      </div>      
+      </div>
 
       {/* <h2 className="text-bg-dark mt-5 p-2">Action</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
