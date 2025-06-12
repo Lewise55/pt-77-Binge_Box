@@ -123,6 +123,29 @@ export const getTopRated = async(dispatch, payload) => {
     }    
 } 
 
+export const getTrending = async(dispatch, payload) => {
+    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+
+    let response = await fetch("https://api.themoviedb.org/3/trending/tv/week", {
+        method: 'GET',
+        headers: {
+            Authorization: "Bearer " + API_KEY,
+            "Content-Type": "application/json"
+        },
+    });
+    let data = await response.json();
+    if(!response.ok){
+        console.log('Network response was not ok');
+    }else{
+        // // console.log(data);
+        dispatch({
+            type: "add_trending",
+            payload: data.results
+        });
+        return data;            
+    }    
+} 
+
 export const getGenres = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -146,10 +169,12 @@ export const getGenres = async(dispatch, payload) => {
     }    
 } 
 
-export const getShowSeason = async(dispatch, payload) => {
+// movie APIs
+
+export const getPopularMovies = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-    let response = await fetch("https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}", {
+    let response = await fetch("https://api.themoviedb.org/3/movie/popular", {
         method: 'GET',
         headers: {
             Authorization: "Bearer " + API_KEY,
@@ -160,19 +185,19 @@ export const getShowSeason = async(dispatch, payload) => {
     if(!response.ok){
         console.log('Network response was not ok');
     }else{
-        // console.log(data);
+        // // console.log(data);
         dispatch({
-            type: "add_season",
+            type: "add_pupular_movie",
             payload: data.results
         });
         return data;            
     }    
 } 
 
-export const getSeasonImage = async(dispatch, payload) => {
+export const getTopRatedMovies = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-    let response = await fetch("https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}/images", {
+    let response = await fetch("https://api.themoviedb.org/3/movie/top_rated", {
         method: 'GET',
         headers: {
             Authorization: "Bearer " + API_KEY,
@@ -183,19 +208,19 @@ export const getSeasonImage = async(dispatch, payload) => {
     if(!response.ok){
         console.log('Network response was not ok');
     }else{
-        // console.log(data);
+        // // console.log(data);
         dispatch({
-            type: "add_season_image",
+            type: "add_top_rated_movie",
             payload: data.results
         });
         return data;            
     }    
 } 
 
-export const getSeasonVideos = async(dispatch, payload) => {
+export const getMoviesPlayingNow = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-    let response = await fetch("https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}/videos", {
+    let response = await fetch("https://api.themoviedb.org/3/movie/now_playing", {
         method: 'GET',
         headers: {
             Authorization: "Bearer " + API_KEY,
@@ -206,19 +231,19 @@ export const getSeasonVideos = async(dispatch, payload) => {
     if(!response.ok){
         console.log('Network response was not ok');
     }else{
-        // console.log(data);
+        // // console.log(data);
         dispatch({
-            type: "add_season_video",
+            type: "add_movie_playing_now",
             payload: data.results
         });
         return data;            
     }    
 } 
 
-export const getShowEpisodes = async(dispatch, payload) => {
+export const getUpcomingMovies = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-    let response = await fetch("https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}/episode/{episode_number}", {
+    let response = await fetch("https://api.themoviedb.org/3/movie/now_playing", {
         method: 'GET',
         headers: {
             Authorization: "Bearer " + API_KEY,
@@ -229,19 +254,19 @@ export const getShowEpisodes = async(dispatch, payload) => {
     if(!response.ok){
         console.log('Network response was not ok');
     }else{
-        // console.log(data);
+        // // console.log(data);
         dispatch({
-            type: "add_episode",
+            type: "add_upcoming_movie",
             payload: data.results
         });
         return data;            
     }    
-} 
+}
 
-export const getEpisodeImages = async(dispatch, payload) => {
+export const getTrendingMovies = async(dispatch, payload) => {
     const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-    let response = await fetch("https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}/episode/{episode_number}/images", {
+    let response = await fetch("https://api.themoviedb.org/3/trending/movie/week", {
         method: 'GET',
         headers: {
             Authorization: "Bearer " + API_KEY,
@@ -252,35 +277,12 @@ export const getEpisodeImages = async(dispatch, payload) => {
     if(!response.ok){
         console.log('Network response was not ok');
     }else{
-        // console.log(data);
+        // // console.log(data);
         dispatch({
-            type: "add_episode_image",
+            type: "add_trending_movie",
             payload: data.results
         });
         return data;            
     }    
 } 
-
-export const getEpisodeVideos = async(dispatch, payload) => {
-    const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
-
-    let response = await fetch("https://api.themoviedb.org/3/tv/{series_id}/season/{season_number}/episode/{episode_number}/videos", {
-        method: 'GET',
-        headers: {
-            Authorization: "Bearer " + API_KEY,
-            "Content-Type": "application/json"
-        },
-    });
-    let data = await response.json();
-    if(!response.ok){
-        console.log('Network response was not ok');
-    }else{
-        // console.log(data);
-        dispatch({
-            type: "add_episode_video",
-            payload: data.results
-        });
-        return data;            
-    }    
-} 
-
+//
