@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import String, Boolean, ForeignKey, Text
+from datetime import datetime
+from sqlalchemy import String, Boolean, ForeignKey, Text, DateTime, func, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
@@ -27,7 +28,9 @@ class User(db.Model):
             "email": self.email,
             "user_name": self.user_name,
             "user_bio": self.user_bio,
-            "user_image": self.user_image
+            "user_image": self.user_image,
+            "favorites": self.favorites,
+            "watches": self.watches,
             # do not serialize the password, its a security breach
         }    
     
@@ -48,6 +51,9 @@ class Favorites(db.Model):
 
     show_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     fav_show: Mapped["Shows"] = relationship(back_populates = "favorites")
+
+    movie_id: Mapped[int] = mapped_column(ForeignKey("movies.id"))
+    fav_movie: Mapped["Movies"] = relationship(back_populates = "favorites")
     
 
     def serialize(self):
@@ -62,28 +68,48 @@ class Favorites(db.Model):
 
 class Reviews(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    review: Mapped[str] = mapped_column(String(520), nullable=False)
+    user_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    user_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    item_type: Mapped[str] = mapped_column(String(520), nullable=False)
+    item_id: Mapped[int] = mapped_column(Integer, nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    rating: Mapped[int] = mapped_column(Integer, nullable=False)
+    timestamp: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
     favorites: Mapped["Favorites"] = relationship(back_populates = "fav_review")
+    comments: Mapped[list["Comments"]] = relationship("Comments", back_populates="review", cascade="all, delete-orphan")
 
     def serialize(self):
         return {
             "id": self.id,
+            "user_id": self.user_id,
             "user_name": self.user_name,
-            "review": self.review,
+            "item_type": self.item_type,
+            "item_id": self.item_id,
+            "text": self.text,
+            "rating": self.rating,
+            "timestamp": self.timestamp,
+            "favorites": self.favorites,
+            "comments": [c.serialize() for c in self.comments]
         }
+
     
 class Comments(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    user_name: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
-    comment: Mapped[str] = mapped_column(String(520), nullable=False)
+    review_id: Mapped[int] = mapped_column(ForeignKey('reviews.id'), nullable=False)
+    user_name: Mapped[str] = mapped_column(String(120), nullable=False)
+    text: Mapped[str] = mapped_column(Text, nullable=False)
+    date: Mapped[datetime] = mapped_column(DateTime, nullable=False, server_default=func.now())
     favorites: Mapped["Favorites"] = relationship(back_populates = "fav_comment")
+    review: Mapped["Reviews"] = relationship("Reviews", back_populates="comments")
 
     def serialize(self):
         return {
             "id": self.id,
+            "review_id": self.review_id,
             "user_name": self.user_name,
-            "comment": self.comment,
+            "text": self.text,
+            "date": self.date,
+            "favorites": self.favorites
         }
 
 class Tags(db.Model):
@@ -125,6 +151,24 @@ class Shows(db.Model):
             "rating": self.rating
         }
     
+class Movies(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(String(520), nullable=False)
+    discription: Mapped[str] = mapped_column(String(520), nullable=False)
+    rating: Mapped[str] = mapped_column(String(520), nullable=False)
+    favorites: Mapped["Favorites"] = relationship(back_populates = "fav_movie")
+    watch_movie_later: Mapped["Watches"] = relationship(back_populates = "watch_movie_later")
+    continue_watching_movies: Mapped["Watches"] = relationship(back_populates = "watch_movie_again")
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "discription": self.discription,
+            "rating": self.rating
+        }
+    
 class Watches(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
 
@@ -133,14 +177,19 @@ class Watches(db.Model):
 
     watch_later_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     watch_show_later: Mapped["Shows"] = relationship(back_populates = "watch_later")
-
-    # continue_watching_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     watch_show_again: Mapped["Shows"] = relationship(back_populates = "continue_watching")
+
+    watch_movie_later_id: Mapped[int] = mapped_column(ForeignKey("movies.id"))
+    watch_movie_later: Mapped["Movies"] = relationship(back_populates = "watch_movie_later")
+    watch_movie_again: Mapped["Movies"] = relationship(back_populates = "continue_watching_movies")
+   
+    
 
     def serialize(self):
         return {
             "id": self.id,
             "user_name": self.user_name,
             "watch_later_id": self.watch_later_id,
-            "continue_watching_id": self.continue_watching_id
+            "watch_movie_id": self.watch_later_id,
+            
         }
