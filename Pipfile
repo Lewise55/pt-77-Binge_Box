@@ -18,8 +18,8 @@ flask-admin = "*"
 typing-extensions = "*"
 wtforms = "==3.1.2"
 sqlalchemy = "*"
-flask = "*"
 flask-jwt-extended = "*"
+flask = "*"
 
 [requires]
 python_version = "3.13"

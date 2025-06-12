@@ -18,7 +18,6 @@ const movies = [
     image: "Place Holder",
   },
 ];
-
 const MovieCarousel = () => {
   return (
     <div id="movieCarousel" className="carousel slide" data-bs-ride="carousel">
