@@ -290,7 +290,7 @@ export const Home = () => {
         )}
       </div>      
 
-      <h2 className="text-bg-dark mt-5 p-2">Action</h2>
+      {/* <h2 className="text-bg-dark mt-5 p-2">Action</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
         {Array.isArray(action) && action.length > 0 ? (
           action
@@ -311,7 +311,7 @@ export const Home = () => {
         ) : (
           <p>No shows found.</p>
         )}
-      </div>
+      </div> */}
 
       <div className="alert alert-info">
         {store.message ? (

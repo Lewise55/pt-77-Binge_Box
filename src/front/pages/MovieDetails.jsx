@@ -31,13 +31,14 @@ export const MovieDetails = () => {
     return (
         <div className="text-center mt-5">
             <div className="cover"
-            style={{
-                height: "90vh",
-                backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}")`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-                position: "relative",
-            }}></div>
+                style={{
+                    height: "90vh",
+                    backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}")`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    position: "relative",
+                }}>
+            </div>
             <div className="d-flex m-5 ">
                 <img src={`https://image.tmdb.org/t/p/w500${movieData.poster_path}`}/>
                 <div className="text-light p-3">

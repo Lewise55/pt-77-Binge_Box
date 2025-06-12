@@ -49,11 +49,15 @@ export const Navbar = () => {
 					</div>				
 				<h2>BINGE BOX</h2>
 				<div className="ml-auto">
+
 					<Link className="mx-2" to="/signup">
 						<button className="btn btn-primary">Signup</button>
 					</Link>
 					<Link to="/login">
 						<button className="btn btn-primary">Login</button>
+					</Link>
+					<Link to="/demo">
+						<button className="btn btn-primary">Home</button>
 					</Link>
 				</div>
 			</div >

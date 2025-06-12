@@ -76,11 +76,11 @@ export const ShowDetails = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     position: "relative",}}>
-                </div>
-                <div className="buttons mt-3 ">
-                    <Link className="btn btn-dark mx-3" to={`/watchTrailer/${series_id}`}>Watch Trailer</Link>
-                    <Link className="btn btn-dark mx-3" to={`/reviews/series/${series_id}`}>Rate & Review</Link>                    
-                </div>  
+            </div>
+            <div className="buttons mt-3 ">
+                <Link className="btn btn-dark mx-3" to={`/watchTrailer/${series_id}`}>Watch Trailer</Link>
+                <Link className="btn btn-dark mx-3" to={`/reviews/series/${series_id}`}>Rate & Review</Link>                    
+            </div>  
             {allSeasonsData.length === 0 ? (
                 <p>Loading seasons...</p>
             ) : (
