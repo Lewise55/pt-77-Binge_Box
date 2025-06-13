@@ -60,7 +60,7 @@ export const MovieDetails = () => {
                         <Link className="btn btn-dark" to={`/watchMovieTrailer/${id}`}>Watch Trailer</Link>
                         <Link className="btn btn-dark mx-2" to={`/reviews/movie/${id}`}>Rate & Review</Link>
                         <div>
-                            <a href={movieData.homepage} className="card-link btn btn-dark mt-3">{movieData.homepage}</a>
+                            <a href={movieData.homepage} target="_blank" rel="noopener noreferrer" className="card-link btn btn-dark mt-3">{movieData.homepage}</a>
                         </div>
                     </div>              
                 </div>                 

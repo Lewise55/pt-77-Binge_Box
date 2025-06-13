@@ -80,7 +80,7 @@ export const ShowDetails = () => {
             <div className="buttons mt-3 ">
                 <Link className="btn btn-dark mx-3" to={`/watchTrailer/${series_id}`}>Watch Trailer</Link>
                 <Link className="btn btn-dark mx-3" to={`/reviews/series/${series_id}`}>Rate & Review</Link> 
-                <div><a href={seriesData.homepage} className="card-link btn btn-dark mt-3">{seriesData.homepage}</a> </div>                   
+                <div><a href={seriesData.homepage} target="_blank" rel="noopener noreferrer" className="card-link btn btn-dark mt-3">{seriesData.homepage}</a> </div>                   
             </div>  
             <div className="d-flex m-5">
                 <img 

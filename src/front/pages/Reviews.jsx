@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart, faReply, faStar } from "@fortawesome/free-solid-svg-icons";
@@ -223,6 +223,24 @@ export const Reviews = () => {
             </div>
           </div>
       ))}
+      <div className="text-center m-5">
+        {type === "movie" ? (
+          <div>          
+            <Link className="btn btn-dark mx-3" to={`/movieDetails/${itemId}`}>View Details</Link>
+            <Link className="btn btn-dark mx-3" to={`/watchMovieTrailer/${itemId}`}>Watch Trailer</Link>
+          </div>
+        ) : (
+          <div>
+            <Link 
+              className="btn btn-dark mx-3" 
+              to={`/showDetails/1/${itemId}`}
+              onClick={() => onShowClick(itemId, 1)}>
+                View Episodes
+            </Link>
+            <Link className="btn btn-dark mx-3" to={`/watchTrailer/${itemId}`}>Watch Trailer</Link>
+          </div>
+        )} 
+      </div>
     </div>
   );
 };

@@ -82,10 +82,7 @@ export const Home = () => {
     store.topRatedMovies,
     store.trendingMovies,
   ]);
-
-  const handleTop = () => {
-    navigate("/")
-  }
+  
   const handleLogout = () => {
         sessionStorage.removeItem('access_token');
         dispatch({
@@ -94,6 +91,13 @@ export const Home = () => {
         });
         navigate("/login");
     }
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth", // Smooth scroll
+    });
+  }
 
   // console.log(shows, airingToday, topRated, "HERE");
 
@@ -288,7 +292,7 @@ export const Home = () => {
          <Link className="btn btn-outline-primary mx-2" to={"/profile"}>View Profile</Link>
          <button 
             className="btn btn-outline-primary mx-3" 
-            onClick={handleTop}>Back to Top
+            onClick={scrollToTop}>Back to Top
          </button>
          <button 
             className="btn btn-outline-primary mx-3"
