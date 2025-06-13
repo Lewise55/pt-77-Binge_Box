@@ -18,6 +18,9 @@ import { Reviews } from "./pages/Reviews";
 import { WatchTrailer } from "./pages/WatchTrailer";
 import { MovieTailer } from "./pages/MovieTrailer";
 import { MovieDetails } from "./pages/MovieDetails";
+import {ActionGenre} from "./pages/ActionGenre";
+import {Comedy} from "./pages/Comedy";
+import {Drama} from "./pages/Drama";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +40,9 @@ export const router = createBrowserRouter(
       <Route path="/signup" element={<Signup />} />
       <Route path="/login" element={<Login />} />
       <Route path="/profile" element={<Private />} />
+      <Route path="/actionGenre" element={<ActionGenre />} />
+      <Route path="/comedy" element={<Comedy />} />
+      <Route path="/drama" element={<Drama />} />
       <Route
         path="/showDetails/:season_number/:series_id"
         element={<ShowDetails />}

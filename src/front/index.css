@@ -7,6 +7,14 @@
     padding: 0;
 }
 
+.showCard{
+    box-shadow: 2px 0px 10px 5px rgba(191, 236, 252, 0.8);
+}
+
+.Headers, .cover, #movieCarousel, .img{
+    box-shadow: 2px 0px 10px 5px rgba(191, 236, 252, 0.8);
+}
+
 .showCard-title, .movieCard-title, .episodeCard-title {
     height: 40px;
     overflow: hidden;
@@ -67,6 +75,7 @@
 .vote {
   height: auto;
 }
+
 
 /* video player */
 

@@ -86,7 +86,7 @@ export const ShowDetails = () => {
             ) : (
                 allSeasonsData.map((season, idx) => (
                     <div key={season.id || idx}>                        
-                        <h2 className="text-bg-dark mt-5 p-2">Season: {season.season_number}</h2>
+                        <h2 className="Headers text-bg-dark mt-5 p-2">Season: {season.season_number}</h2>
                         <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto">
                             {Array.isArray(season.episodes) && season.episodes.length > 0 ? (
                                 season.episodes.map((episode, index) => (

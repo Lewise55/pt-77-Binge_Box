@@ -51,7 +51,7 @@ export const MovieTailer = () => {
         }}></div>
       {videoUrl ? (
         <iframe
-          className="mt-5"
+          className="Headers mt-5"
           width="560"
           height="315"
           src={videoUrl}
