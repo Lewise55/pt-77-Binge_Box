@@ -27,7 +27,7 @@ export const Reviews = () => {
     setUserInfo(handle_getUser);
   },[])
 
-  console.log(userinfo)
+  // console.log(userinfo)
 
 
   useEffect(() => {

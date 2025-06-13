@@ -8,7 +8,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export const ActionGenre = () => {
 
-    const { store, dispatch, getGenres, getShows, getPopularMovies } = useGlobalReducer()  
+    const { store, dispatch, getShows, getTopRated, getPopularMovies, getTopRatedMovies } = useGlobalReducer()  
     const navigate = useNavigate();
     const actionGenreId = 28; // Action & Adventure movies
     const actionTvId = 10759; // Action & Adventure tv
@@ -22,16 +22,20 @@ export const ActionGenre = () => {
     
     useEffect(() => {
         getShows();
+        getTopRated();
         getPopularMovies();
-        getGenres().then((data) => {
-            setGenres(data.genres);
-        });
+        getTopRatedMovies();
     }, [])
 
     useEffect(() => {
-        setShows(store.shows);
-        setMovies(store.popularMovies);
-    }, [store.shows, store.popularMovies])   
+        setShows(store.shows, store.showsTopRated);
+        setMovies(store.popularMovies, store.topRatedMovies);
+    }, [
+        store.shows, 
+        store.showsTopRated, 
+        store.popularMovies, 
+        store.topRatedMovies
+    ])   
 
    
     return (

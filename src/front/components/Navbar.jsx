@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import logo from "../assets/img/logo.png";
 
 export const Navbar = () => {
   return (
@@ -9,7 +10,7 @@ export const Navbar = () => {
             
             <div className="navbar-brand" href="#">
               <Link to="/"> 
-              <img src="logo.png" alt="" width="100" height="100" />
+                <img src="logo.png" alt="" width="100" height="100" />
               </Link>
             </div>           
             
@@ -34,7 +35,7 @@ export const Navbar = () => {
                 Sports <i className="fa-solid fa-futbol"></i>
               </button>
             </Link>
-            <Link>
+            <Link to="/live">
               <button className="btn btn-light text-primary">
                 Live TV <i className="fa-solid fa-tv"></i>
               </button>
@@ -48,9 +49,12 @@ export const Navbar = () => {
           </div>          
 
           <div className="d-flex align-items-center justify-content-end pl-0">
+            <Link className="mx-1" to="/login">
+              <button className="btn btn-light text-primary">Login</button>
+            </Link>
             <Link className="mx-1" to="/signup">
               <button className="btn btn-light text-primary">Signup</button>
-            </Link>
+            </Link>           
             <Link className="mx-1" to="/">
               <button className="btn btn-light text-primary">
                 <i className="fa-solid fa-house fa-xl"></i>{" "}

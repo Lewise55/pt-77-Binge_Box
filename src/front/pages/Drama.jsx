@@ -8,7 +8,7 @@ import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export const Drama = () => {
 
-    const { store, dispatch, getGenres, getShows, getPopularMovies } = useGlobalReducer()  
+    const { store, dispatch, getShows, getTopRated, getPopularMovies, getTopRatedMovies } = useGlobalReducer()  
     const navigate = useNavigate();
     const dramaGenreId = 18 ; // Drama movies
     const dramaTvId = 18 ; // Drama tv
@@ -22,21 +22,25 @@ export const Drama = () => {
 
     useEffect(() => {
         getShows();
+        getTopRated();
         getPopularMovies();
-        getGenres().then((data) => {
-            setGenres(data.genres);
-        });
+        getTopRatedMovies();
     }, [])
 
     useEffect(() => {
-        setShows(store.shows);
-        setMovies(store.popularMovies);
-    }, [store.shows, store.popularMovies])   
+        setShows(store.shows, store.showsTopRated);
+        setMovies(store.popularMovies, store.topRatedMovies);
+    }, [
+        store.shows, 
+        store.showsTopRated, 
+        store.popularMovies, 
+        store.topRatedMovies
+    ])   
            
 
     return (
         <div className="text-center mt-5">
-            <h2 className="text-bg-dark mt-5 p-2">Drama Films</h2>
+            <h2 className="Headers text-bg-dark mt-5 p-2">Drama Films</h2>
             <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
                 {Array.isArray(movies) && movies.length > 0 ? (
                     movies                   
@@ -59,7 +63,7 @@ export const Drama = () => {
                 )}           
             </div>
 
-            <h2 className="text-bg-dark mt-5 p-2">Drama TV</h2>
+            <h2 className="Headers text-bg-dark mt-5 p-2">Drama TV</h2>
             <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
                 {Array.isArray(shows) && shows.length > 0 ? (
                 shows

@@ -6,45 +6,42 @@ import { MovieCard } from "../components/MovieCard.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 
-export const Comedy = () => {
+export const Live = () => {
 
-    const { store, dispatch, getShows, getTopRated, getPopularMovies, getTopRatedMovies } = useGlobalReducer()  
+    const { store, dispatch, getAiringToday, getMoviesPlayingNow} = useGlobalReducer()  
     const navigate = useNavigate();
-    const comedyGenreId = 35 ; // Comedy movies
-    const comedyTvId = 35 ; // Comedy tv
+    // const liveGenreId = 35 ; // Live movies
+    // const liveTvId = 35 ; // Live tv
     const [genres, setGenres] = useState([]);    
     const [movies, setMovies] = useState([]);
     const [shows, setShows] = useState([]); 
     const [selectedShow, setSelectedShow] = useState(null);
     const [selectedMovie, setSelectedMovie] = useState(null);
-    const[comedyMovies, setComedyMovies] = useState([]);
-    const[comedyShows, setComedyShows] = useState([]);
+    const[liveMovies, setLiveMovies] = useState([]);
+    const[liveShows, setLiveShows] = useState([]);
 
    useEffect(() => {
-        getShows();
-        getTopRated();
-        getPopularMovies();
-        getTopRatedMovies();
+        getAiringToday();
+        getMoviesPlayingNow();
+        
     }, [])
 
     useEffect(() => {
-        setShows(store.shows, store.showsTopRated);
-        setMovies(store.popularMovies, store.topRatedMovies);
+        setShows(store.showsAiringToday);
+        setMovies(store.moviesPlayingNow);
     }, [
-        store.shows, 
-        store.showsTopRated, 
-        store.popularMovies, 
-        store.topRatedMovies
+        store.showsAiringToday, 
+        store.moviesPlayingNow
     ])     
            
 
     return (
         <div className="text-center mt-5">
-            <h2 className="Headers text-bg-dark mt-5 p-2">Comedy Films</h2>
+            <h2 className="Headers text-bg-dark mt-5 p-2">Films Playing Now</h2>
             <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
                 {Array.isArray(movies) && movies.length > 0 ? (
                     movies                   
-                        .filter((movie) => movie.genre_ids.includes(comedyGenreId))
+                        // .filter((movie) => movie.genre_ids.includes(liveGenreId))
                         .map((movie, index) => (
                             <MovieCard
                                 key={index}
@@ -59,15 +56,15 @@ export const Comedy = () => {
                             />
                         ))
                 ) : (
-                    <p>No comedy movies found.</p>
+                    <p>No live movies found.</p>
                 )}           
             </div>
 
-            <h2 className="Headers text-bg-dark mt-5 p-2">Comedy TV</h2>
+            <h2 className="Headers text-bg-dark mt-5 p-2">Shows Airing Today</h2>
             <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
                 {Array.isArray(shows) && shows.length > 0 ? (
                 shows
-                    .filter((show) => show.genre_ids.includes(comedyTvId))
+                    // .filter((show) => show.genre_ids.includes(liveTvId))
                     .map((show, index) => (
                     <ShowCard
                         key={index}
@@ -82,7 +79,7 @@ export const Comedy = () => {
                     />
                     ))
                 ) : (
-                <p>No comedy shows found.</p>
+                <p>No live shows found.</p>
                 )}
             </div>
             
