@@ -84,7 +84,7 @@ export const WatchTrailer = () => {
           <p>{tvData.tagline}</p>
           <p>{tvData.overview}</p>
           <p>Release Date: {tvData.first_air_date}</p>
-          <p>Rating: {tvData.rating}</p>
+          <p>Rating: {tvData.vote_average}</p>
           <p>Seasons: {tvData.number_of_seasons}</p>
           <p>Episodes: {tvData.number_of_episodes}</p>
           {tvData.networks?.length > 0 && tvData.networks[0].logo_path && (

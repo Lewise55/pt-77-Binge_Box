@@ -76,12 +76,7 @@ export const ShowDetails = () => {
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     position: "relative",}}>
-            </div>
-            <div className="buttons mt-3 ">
-                <Link className="btn btn-dark mx-3" to={`/watchTrailer/${series_id}`}>Watch Trailer</Link>
-                <Link className="btn btn-dark mx-3" to={`/reviews/series/${series_id}`}>Rate & Review</Link> 
-                <div><a href={seriesData.homepage} target="_blank" rel="noopener noreferrer" className="card-link btn btn-dark mt-3">{seriesData.homepage}</a> </div>                   
-            </div>  
+            </div>            
             <div className="d-flex m-5">
                 <img 
                     className="posterImage" 
@@ -92,7 +87,7 @@ export const ShowDetails = () => {
                     <p>seriesData.tagline</p>
                     <p>{seriesData.overview}</p>
                     <p>Release Date: {seriesData.first_air_date}</p>
-                    <p>Rating: {seriesData.rating}</p>
+                    <p>Rating: {seriesData.vote_average}</p>
                     <p>Seasons: {seriesData.number_of_seasons}</p>
                     <p>Episodes: {seriesData.number_of_episodes}</p>                    
                     {seriesData.networks?.length > 0 && seriesData.networks[0].logo_path && (
@@ -100,9 +95,21 @@ export const ShowDetails = () => {
                             src={`https://image.tmdb.org/t/p/w200${seriesData.networks[0].logo_path}`}
                             alt={seriesData.networks[0].name}
                         />
-                        )}
+                        )}                
+                    <div className="buttons mt-3 ">
+                        <Link className="btn btn-dark mx-3" to={`/watchTrailer/${series_id}`}>Watch Trailer</Link>
+                        <Link className="btn btn-dark mx-3" to={`/reviews/series/${series_id}`}>Rate & Review</Link> 
+                        <div>
+                            <a 
+                                href={seriesData.homepage} 
+                                target="_blank" rel="noopener noreferrer" 
+                                className="card-link btn btn-dark mt-3">
+                                    {seriesData.homepage}
+                            </a> 
+                        </div>                   
                     </div>
-                </div>
+                </div>  
+            </div>
             {allSeasonsData.length === 0 ? (
                 <p>Loading seasons...</p>
             ) : (

@@ -56,6 +56,15 @@ def handle_login():
         return jsonify(access_token=access_token, user=user.serialize()), 200
     else:
         return jsonify("User not found"), 400
+    
+# @api.route('/request-reset', methods=['POST'])
+# def request_reset():
+#     data = request.get_json()
+#     user_email = data.get("email")
+    
+
+# @api.route('/reset-password', methods=['POST'])
+# def handle_login():
 
 
 @api.route('/private', methods=['GET'])

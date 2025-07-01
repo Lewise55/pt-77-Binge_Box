@@ -15,9 +15,12 @@ class User(db.Model):
     # trying Text instad of String
     user_image: Mapped[str] = mapped_column(Text, nullable=True)
     password: Mapped[str] = mapped_column(nullable=False)
+    reset_token: Mapped[str] = mapped_column(String(120), nullable=True)
+    token_experation: Mapped[datetime] = mapped_column(DateTime, nullable=True)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False)
     favorites: Mapped[list["Favorites"]] = relationship(back_populates = "user_favorites")
     watches: Mapped[list["Watches"]] = relationship(back_populates = "user_watches")
+    
 
 
     def serialize(self):
@@ -29,6 +32,8 @@ class User(db.Model):
             "user_name": self.user_name,
             "user_bio": self.user_bio,
             "user_image": self.user_image,
+            "reset_token": self.reset_token,
+            "token_experation": self.token_experation,
             "favorites": self.favorites,
             "watches": self.watches,
             # do not serialize the password, its a security breach
