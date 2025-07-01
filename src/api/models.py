@@ -51,6 +51,9 @@ class Favorites(db.Model):
 
     show_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     fav_show: Mapped["Shows"] = relationship(back_populates = "favorites")
+
+    movie_id: Mapped[int] = mapped_column(ForeignKey("movies.id"))
+    fav_movie: Mapped["Movies"] = relationship(back_populates = "favorites")
     
 
     def serialize(self):
@@ -148,6 +151,24 @@ class Shows(db.Model):
             "rating": self.rating
         }
     
+class Movies(db.Model):
+    id: Mapped[int] = mapped_column(primary_key=True)
+    title: Mapped[str] = mapped_column(String(520), nullable=False)
+    discription: Mapped[str] = mapped_column(String(520), nullable=False)
+    rating: Mapped[str] = mapped_column(String(520), nullable=False)
+    favorites: Mapped["Favorites"] = relationship(back_populates = "fav_movie")
+    watch_movie_later: Mapped["Watches"] = relationship(back_populates = "watch_movie_later")
+    continue_watching_movies: Mapped["Watches"] = relationship(back_populates = "watch_movie_again")
+
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "title": self.title,
+            "discription": self.discription,
+            "rating": self.rating
+        }
+    
 class Watches(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
 
@@ -156,14 +177,19 @@ class Watches(db.Model):
 
     watch_later_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     watch_show_later: Mapped["Shows"] = relationship(back_populates = "watch_later")
-
-    # continue_watching_id: Mapped[int] = mapped_column(ForeignKey("shows.id"))
     watch_show_again: Mapped["Shows"] = relationship(back_populates = "continue_watching")
+
+    watch_movie_later_id: Mapped[int] = mapped_column(ForeignKey("movies.id"))
+    watch_movie_later: Mapped["Movies"] = relationship(back_populates = "watch_movie_later")
+    watch_movie_again: Mapped["Movies"] = relationship(back_populates = "continue_watching_movies")
+   
+    
 
     def serialize(self):
         return {
             "id": self.id,
             "user_name": self.user_name,
             "watch_later_id": self.watch_later_id,
-            "continue_watching_id": self.continue_watching_id
+            "watch_movie_id": self.watch_later_id,
+            
         }

@@ -14,6 +14,8 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+  font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: 400;
 }
 
 .card-img-wrapper {
@@ -56,6 +58,14 @@
 
 .card-body {
   flex: 1; /* This makes all .card-body the same height */
+}
+
+.list-group-item {
+  height: auto;
+}
+
+.vote {
+  height: auto;
 }
 
 /* video player */

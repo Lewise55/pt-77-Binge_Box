@@ -8,24 +8,24 @@ import { Navigate } from "react-router-dom";
 import { ShowCard } from "../components/ShowCard.jsx";
 import { MovieCard } from "../components/MovieCard.jsx";
 import { Carousel } from "../components/Carousel.jsx";
-import { faMoneyBillWave } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 
 export const Home = () => {
-  const { 
-    store, 
-    dispatch, 
-    getShows, 
-    getAiringToday, 
+  const {
+    store,
+    dispatch,
+    getShows,
+    getAiringToday,
     getTopRated,
-    getTrending, 
+    getTrending,
     getGenres,
     getPopularMovies,
     getTopRatedMovies,
     getMoviesPlayingNow,
     getUpcomingMovies,
     getTrendingMovies,
-   } =
-    useGlobalReducer();
+  } = useGlobalReducer();
   const navigate = useNavigate();
   const [selectedShow, setSelectedShow] = [];
   const [selectedMovie, setSelectedMovie] = [];
@@ -35,7 +35,7 @@ export const Home = () => {
   const [trending, setTrending] = useState([]);
   const [genres, setGenres] = useState([]);
   const [action, setAction] = useState([]);
-  const [moviesPlayingNow, setMoviesPlayingNow] = useState([])
+  const [moviesPlayingNow, setMoviesPlayingNow] = useState([]);
   const [popularMovies, setPopularMovies] = useState([]);
   const [topRatedMovies, setTopRatedMovies] = useState([]);
   const [trendingMovies, setTrendingMovies] = useState([]);
@@ -83,19 +83,19 @@ export const Home = () => {
     setAiringToday(store.showsAiringToday);
     setTopRated(store.showsTopRated);
     setTrending(store.showsTrending);
-    setPopularMovies(store.popularMovies);    
+    setPopularMovies(store.popularMovies);
     setMoviesPlayingNow(store.moviesPlayingNow);
     setTopRatedMovies(store.topRatedMovies);
-    setTrendingMovies(store.trendingMovies)
+    setTrendingMovies(store.trendingMovies);
   }, [
-    store.shows, 
-    store.showsAiringToday, 
+    store.shows,
+    store.showsAiringToday,
     store.showsTopRated,
     store.showsTrending,
-    store.popularMovies,    
+    store.popularMovies,
     store.moviesPlayingNow,
     store.topRatedMovies,
-    store.trendingMovies
+    store.trendingMovies,
   ]);
 
   // console.log(shows, airingToday, topRated, "HERE");
@@ -114,18 +114,17 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
         ) : (
           <p>No movies found.</p>
         )}
-      </div>     
+      </div>
 
       <h2 className="text-bg-dark mt-5 p-2">Trending Films</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
@@ -138,18 +137,17 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
         ) : (
           <p>No movies found.</p>
         )}
-      </div>       
+      </div>
 
       <h2 className="text-bg-dark mt-5 p-2">Popular Films</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
@@ -162,11 +160,10 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
@@ -186,11 +183,10 @@ export const Home = () => {
                 id={movie.id}
                 original_title={movie.original_title}
                 poster_path={movie.poster_path}
-                first_air_date={movie.first_air_date}
                 name={movie.name}
                 overview={movie.overview}
                 vote_average={movie.vote_average}
-                first_air_date={movie.first_air_date}
+                release_date={movie.release_date}
                 onClick={() => setSelectedMovie({ id })}
               />
             ))
@@ -221,7 +217,7 @@ export const Home = () => {
           <p>No shows found.</p>
         )}
       </div>
-      
+
       <h2 className="text-bg-dark mt-5 p-2">Trending TV</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
         {Array.isArray(trending) && trending.length > 0 ? (
@@ -289,9 +285,9 @@ export const Home = () => {
         ) : (
           <p>No shows found.</p>
         )}
-      </div>      
+      </div>
 
-      <h2 className="text-bg-dark mt-5 p-2">Action</h2>
+      {/* <h2 className="text-bg-dark mt-5 p-2">Action</h2>
       <div className="d-flex align-items-stretch col-10 overflow-auto mt-2 mx-auto ">
         {Array.isArray(action) && action.length > 0 ? (
           action
@@ -312,7 +308,7 @@ export const Home = () => {
         ) : (
           <p>No shows found.</p>
         )}
-      </div>
+      </div> */}
 
       <div className="alert alert-info">
         {store.message ? (

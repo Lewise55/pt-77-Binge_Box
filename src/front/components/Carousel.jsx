@@ -5,7 +5,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 
 export const Carousel = () => {
   const { store, dispatch } = useGlobalReducer();
-  const [movies, setMovies]  = useState([]);
+  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const fetchUpcomingMovies = async () => {
@@ -20,27 +20,25 @@ export const Carousel = () => {
             "Content-Type": "application/json",
           },
         }
-      );  
+      );
       let data = await response.json();
       if (!response.ok) {
         console.log("cannot load movie data");
         return;
       }
-      setMovies(data.results);    
+      setMovies(data.results);
     };
     fetchUpcomingMovies();
-  }, [])
+  }, []);
 
-  console.log(movies)
+  console.log(movies);
 
   return (
     <div id="movieCarousel" className="carousel slide" data-bs-ride="carousel">
       <div className="carousel-inner">
         {Array.isArray(movies) && movies.length > 0 ? (
-          movies
-            .slice(0, 20)
-            .map((movie, index) => (
-              <div
+          movies.slice(0, 20).map((movie, index) => (
+            <div
               key={index}
               className={`carousel-item ${index === 0 ? "active" : ""}`}
               style={{
@@ -66,8 +64,8 @@ export const Carousel = () => {
                 <p style={{ fontSize: "1.2rem" }}>{movie.description}</p>
               </div>
             </div>
-            ))
-          ) : (          
+          ))
+        ) : (
           <p>More Coming Soon...</p>
         )}
       </div>

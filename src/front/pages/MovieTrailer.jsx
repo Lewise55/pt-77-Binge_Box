@@ -5,6 +5,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
 export const MovieTailer = () => {
   const { store, dispatch } = useGlobalReducer();
   const [trailers, setTrailers] = useState([]);
+  const [movieData, setMovieData] = useState("");
 
   const { id } = useParams();
 
@@ -22,6 +23,7 @@ export const MovieTailer = () => {
         }
       );
       let data = await response.json();
+      setMovieData(data);
       let actualTrailers = data.videos.results.filter(
         (video) => video.type == "Trailer"
       );
@@ -39,8 +41,17 @@ export const MovieTailer = () => {
 
   return (
     <div className="text-center mt-5">
+      <div className="cover"
+        style={{
+            height: "90vh",
+            backgroundImage: `url("https://image.tmdb.org/t/p/w1280${movieData.backdrop_path}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            position: "relative",
+        }}></div>
       {videoUrl ? (
         <iframe
+          className="mt-5"
           width="560"
           height="315"
           src={videoUrl}
