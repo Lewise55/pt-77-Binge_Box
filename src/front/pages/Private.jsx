@@ -149,7 +149,7 @@ export const Private = () => {
                     </div>
                     <div className="card-body border-2 rounded border-dark">
                         <div className="d-flex align-items-center">
-                            <div className="border-2 rounded border-dark d-flex flex-column col-4 mb-2">
+                            <div className="border-2 rounded border-dark d-flex flex-column col-2 mb-2">
                                 <img
                                     src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSllHYt7njYkqDfNdEBcNHiNkOwov2NXCnC6Q&s" 
                                     className="img-thumbnail border-2 rounded border-dark mx-2" 

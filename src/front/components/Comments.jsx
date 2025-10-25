@@ -3,6 +3,20 @@ import React, { useEffect, useState } from "react";
 export const Comments = ({ reviewId, itemType, itemId }) => {
   const [comments, setComments] = useState([]);
   const [text, setText] = useState("");
+  const[refresh, setRefresh] = useState(false);
+  const [startPoint, setStartPoint] = useState(0);
+
+  useEffect(() => {
+    const pullRequest = async() => {
+    setRefresh(true);
+    fetchComment();
+  }
+  pullRequest();
+  },[refresh])
+  
+  const handleTouchStart = () => {}
+
+  const handleTocuhEnd = () => {}
 
   useEffect(() => {
     const fetchComment = async() => {
@@ -11,6 +25,7 @@ export const Comments = ({ reviewId, itemType, itemId }) => {
         .then(data => setComments(data));
     }
     fetchComment();
+    setRefresh(false);
   }, [reviewId, itemType, itemId]);
 
   const submitComment = async () => {
