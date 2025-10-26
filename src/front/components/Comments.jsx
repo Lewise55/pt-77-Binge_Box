@@ -1,22 +1,9 @@
 import React, { useEffect, useState } from "react";
+import ReactPullToRefresh from "react-pull-to-refresh";
 
 export const Comments = ({ reviewId, itemType, itemId }) => {
   const [comments, setComments] = useState([]);
-  const [text, setText] = useState("");
-  const[refresh, setRefresh] = useState(false);
-  const [startPoint, setStartPoint] = useState(0);
-
-  useEffect(() => {
-    const pullRequest = async() => {
-    setRefresh(true);
-    fetchComment();
-  }
-  pullRequest();
-  },[refresh])
-  
-  const handleTouchStart = () => {}
-
-  const handleTocuhEnd = () => {}
+  const [text, setText] = useState(""); 
 
   useEffect(() => {
     const fetchComment = async() => {
@@ -25,7 +12,6 @@ export const Comments = ({ reviewId, itemType, itemId }) => {
         .then(data => setComments(data));
     }
     fetchComment();
-    setRefresh(false);
   }, [reviewId, itemType, itemId]);
 
   const submitComment = async () => {
@@ -49,25 +35,29 @@ export const Comments = ({ reviewId, itemType, itemId }) => {
   };
 
   return (
-    <div className="comments mt-2 mb-2">
-      <div>
-        {comments.map((c, idx) => (
-          <div key={c.id || idx} style={{ fontSize: "0.9rem", marginLeft: 20 }}>
-            <strong>{c.user || "Anonymous"}:</strong> {c.text}
-          </div>
-        ))}
+   
+    <ReactPullToRefresh onRefresh={fetchComment}> 
+      <div className="comments mt-2 mb-2">
+        <div>
+          {comments.map((c, idx) => (
+            <div key={c.id || idx} style={{ fontSize: "0.9rem", marginLeft: 20 }}>
+              <strong>{c.user || "Anonymous"}:</strong> {c.text}
+            </div>
+          ))}
+        </div>
+        <div className="input-group mt-1">
+          <input
+            className="form-control"
+            placeholder="Write a comment..."
+            value={text}
+            onChange={e => setText(e.target.value)}
+          />
+          <button className="btn btn-primary" onClick={submitComment} disabled={!text.trim()}>
+            Reply
+          </button>
+        </div>
       </div>
-      <div className="input-group mt-1">
-        <input
-          className="form-control"
-          placeholder="Write a comment..."
-          value={text}
-          onChange={e => setText(e.target.value)}
-        />
-        <button className="btn btn-primary" onClick={submitComment} disabled={!text.trim()}>
-          Reply
-        </button>
-      </div>
-    </div>
+    </ReactPullToRefresh>      
+    
   );
 }
